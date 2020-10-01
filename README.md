@@ -58,33 +58,33 @@ possibilite de faire tourner les codes depuis `$DATAWORK` directement.
 Pour lister les differents modules disponibles:
 
 ``` {.csh language="csh"}
-    module avail
+module avail
 ```
 
 Pour lister les differents modules de charges:
 
 ``` {.csh language="csh"}
-    module list
+module list
 ```
 
 Pour charger un module:
 
 ``` {.csh language="csh"}
-    module load R   # charge un module
-    module load java NETCDF  #  charge 2 modules a la fois
-    module load vacumm/3.4.0-intel   # charge une version specifique
+module load R   # charge un module
+module load java NETCDF  #  charge 2 modules a la fois
+module load vacumm/3.4.0-intel   # charge une version specifique
 ```
 
 Pour desactiver un module:
 
 ``` {.csh language="csh"}
-    module unload R
+module unload R
 ```
 
 Pour enlever tous les modules charges:
 
 ``` {.csh language="csh"}
-    module purge
+module purge
 ```
 
 # Reglages par default
@@ -95,21 +95,25 @@ fichier `${HOME}/.cshrc`.
 On peut soit ajouter de nouveaux raccourcis (alias) soit changer le comportement
 par defaut de certaines commandes
 
-        # nouveaux raccourcis
-        alias x 'exit'
-        alias c 'clear'
+```{.csh language="csh"}
+# nouveaux raccourcis
+alias x 'exit'
+alias c 'clear'
         
-        # remplacer le comportement par defaut
-        # evite l'ecrasement de fichiers existant lors
-        # des copies/renommage/deplacements et effacements
-        alias rm 'rm -i -v'
-        alias cp 'cp -i -v -p'
-        alias mv 'mv -i -v'
+# remplacer le comportement par defaut
+# evite l'ecrasement de fichiers existant lors
+# des copies/renommage/deplacements et effacements
+alias rm 'rm -i -v'
+alias cp 'cp -i -v -p'
+alias mv 'mv -i -v'
+```
 
 On peut aussi definir des variables d'environnement supplementaires (par
 exemple lieu d'installation des librairies R):
 
-        setenv R_LIBS_USER $HOME/libs/R/lib
+```{.csh language="csh"}
+setenv R_LIBS_USER $HOME/libs/R/lib
+```
 
 # Lancement de Job
 
@@ -142,16 +146,14 @@ avec `XXXX` l'identification du job.
 
 Des exemples sont fournis par datarmor dans le dossier
 `/appli/services/exemples/` (dossiers `R` et `pbs`). Deux exemples sont
-fournis ci-dessous, un en CSH (le default de Dataror) et un autre en
-BASH.
+fournis ci-dessous, un sequentiel et un en parallel.
 
-Script en CSH:
+**Script sequentiel (lancement script R)**
 
 ``` {.csh language="csh"}
 #!/bin/csh
 #PBS -l mem=1g
 #PBS -l walltime=00:30:00
-
 # First line defines the memory used
 # Second line defines the "walltime" (if time > walltime, job is killed)
 
@@ -160,8 +162,10 @@ Script en CSH:
 
 # copy the code into the SCRATCH dir
 cp -pr $HOME/code $SCRACTH
+
 # copy the input data into the SCRATCH dir
 cp -pr $DATAWORK/data $SCRACTH
+
 # move to the SCRATCH directory
 cd $SCRATCH
 
@@ -170,59 +174,44 @@ source /usr/share/Modules/3.2.10/init/csh
 module load R
 
 # indique ou trouver les librairies R installees a la main.
-setenv R_LIBS $HOME/libs/R/lib
+setenv R_LIBS_USER $HOME/libs/R/lib
 
 # Run R
 date
-time R --vanilla < script.R >& output.log  # redirects outputs into log
-# time R --vanilla < script.R >   # in this case, outputs will be in 
+Rscript script.R >& output.log  # redirects outputs into log
 date
 ```
 
-\vspace{1em}
-Script en BASH:
+**Script en parralel (lancement programme MPI)**:
 
-``` {.bash language="bash"}
-#!/bin/bash
-#PBS -l mem=1g
-#PBS -l walltime=00:30:00
+``` {.bash language="csh"}
+#!/bin/csh
+#PBS -q mpi_2
+#PBS -l walltime=00:05:00
+# example of using 2node, i.e. 2*28 mpi procs
+# cd to the directory you submitted your job
+cd $PBS_O_WORKDIR
 
-# First line defines the memory used
-# Second line defines the "walltime" (if time > walltime, job is killed)
+source /usr/share/Modules/3.2.10/init/csh
+module load   NETCDF/4.3.3.1-mpt-intel2016
+ 
+setenv mpiproc `cat $PBS_NODEFILE  |wc -l`
+echo "submit job with  $NETCDF_MODULE "
+echo "job running with  $mpiproc mpi process "
 
-# go to the directory where the job has been run
-# cd $PBS_O_WORKDIR
-
-# copy the code into the SCRATCH dir
-cp -pr $HOME/code $SCRACTH
-# copy the input data into the SCRATCH dir
-cp -pr $DATAWORK/data $SCRACTH
-# move to the SCRATCH directory
-cd $SCRATCH
-
-# Load the modules that will be used to do the job
-source /usr/share/Modules/3.2.10/init/bash
-module load R
-
-# indique ou trouver les librairies R installees a la main.
-export R_LIBS=$HOME/libs/R/lib
-
-# Run R
 date
-time R --vanilla < script.R > output.log 2>&1  # redirects outputs into log
-# time R --vanilla < script.R >   # in this case, outputs will be in 
+time $MPI_LAUNCH exe >& out
 date
 ```
 
-\vspace{1em}
 Commandes utiles pour suivre les jobs:
 
 ``` {.csh language="csh"}
-    # suivi des jobs pour un utilisateur donne
-    qstat -u nbarrier
+# suivi des jobs pour un utilisateur donne
+qstat -u nbarrier
     
-    # supprimer un JOB
-    qdel JOB_ID   # job ID est fourni par qstat
+# supprimer un JOB
+qdel JOB_ID   # job ID est fourni par qstat
 ```
 
 Le premier argument est le nom du dossier Datarmor que vous voulez
@@ -231,28 +220,88 @@ sera fait.
 
 # External Data Exchange
 
-To exchange heavy data from outside the Ifremer Network, you need to
+To exchange heavy data , you need to
 have a `$SCRATCH/eftp` directory on your datarmor account.
 
-Move to the source/destination directory.
+On your local computer, move to the source/destination directory.
 
 Then, connect to the FTP as follows:
 
-    ftp eftp.ifremer.fr
+```
+ftp eftp.ifremer.fr
+```
 
 Connect using your extranet account. Then:
 
-    cd scratch   # WARNING, DON'T FORGET!
+```
+cd scratch   # WARNING, DON'T FORGET!
+prompt  # activate/deactivate interactive mode
+get file.nc  # send $SCRATCH/eftp/file.nc to the local directory
+mget *  # send all files in $SCRATCH/eftp/ to the local directory
+put file.nc  # send local file.nc to the $SCRATCH/eftp/
+mput *  # send all files in local directory to the $SCRATCH/eftp
+```
 
-    prompt  # activate/deactivate interactive mode
-
-    get file.nc  # send $SCRATCH/eftp/file.nc to the local directory
-
-    mget *  # send all files in $SCRATCH/eftp/ to the local directory
-    put file.nc  # send local file.nc to the $SCRATCH/eftp/
-    mput *  # send all files in local directory to the $SCRATCH/eftp/
+Note that `eftp.ifremer.fr` can also be accessed using FileZilla.
     
- # Setting up software environment
+# Setting up software environment
  
+Afin de mettre en place des environnements logiciels non disponibles via les modules, il faut utiliser
+le gestionnaire de paquets multilangages **conda** (cf. [Conda sur Datarmor](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/Datarmor-Calcul-et-Donnees/Datarmor-calcul-et-programmes/Pour-aller-plus-loin/,DanaInfo=w3z.ifremer.fr,SSL+Conda-sur-Datarmor)). 
+
+Une introduction generale a conda est disponible [ici](https://github.com/umr-marbec/python-training/blob/master/introduction/libinstall.ipynb)
+
+Pour l'activer sur Datarmor, ajouter dans son fichier `.cshrc`:
+
+```
+source /appli/anaconda/latest/etc/profile.d/conda.csh
+```
+
+Afin de recuperer les environnements conda deja installes sur Datarmor, creer le fichier `~/.condarc` et y mettre:
+
+```
+envs_dirs:
+- /appli/conda-env
+- /appli/conda-env/2.7
+- /appli/conda-env/3.6
+pkgs_dirs:
+- $DATAWORK/conda/pkgs
+```
+
+Pour lister les environnements conda disponibles, taper:
+
+```
+conda env list
+```
+
+Afin de definir un dossier contenant les futurs environnements, ajouter le dossier en question dans le fichier `.condarc` **en haut de la liste**.
+Par exemple, pour installer les environnements dans son $HOME:
+
+```
+envs_dirs:
+- /home1/datahome/nbarrier/softwares/anaconda3-envs
+- /appli/conda-env
+- /appli/conda-env/2.7
+- /appli/conda-env/3.6
+pkgs_dirs:
+- $DATAWORK/conda/pkgs
+```
+
+Les nouveaux environnements vont etre installes dans `/home1/datahome/nbarrier/softwares/anaconda3-envs`.
+
+Pour activer/desactiver un environnement virtuel:
+
+```
+conda activate pyngl
+conda deactivate pyngl
+```
+
+Conda est principalement utilise avec Python, mais peut aussi etre utilise avec R. Pour creer un environnement virtuel pour R:
+
+```
+conda create -n r-env r-base 
+```
+
+Note that R packages all start with the `r-` prefix.
  
   
