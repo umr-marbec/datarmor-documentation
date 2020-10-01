@@ -1,38 +1,41 @@
+Documentation Datarmor
+==========================
 
-Connection
-==========
+# Connection
 
-Windows
--------
+## Windows
 
 Connection via [Putty](https://www.putty.org/) (login + mdp intranet
 ifremer)
 
 ![image](figs/Capture_putty.PNG)
 
-Echange de donnees via [FileZilla](https://filezilla-project.org/).
+<!-- Echange de donnees via [FileZilla](https://filezilla-project.org/).
 
 ![image](figs/filezilla_short.png)
+-->
 
-Linux / Mac Os X
-----------------
+## Linux / Mac Os X
 
-Connection et echange via le terminal:
+Connection et echange possible via Putty, mais aussi via le terminal:
 
 ``` {.csh language="csh"}
 # connexion (login + mdp intranet ifremer)
 ssh nbarrier@datarmor.ifremer.fr
-    
-# !!!!!!!!!!!!!!!!!!!!!!!!! ONLY FOR SMALL DATA (scripts for instance)
-# echange local -> datarmor
-scp -pr data_to_send nbarrier@datarmor.ifremer.fr:receive_dir
-
-# echange datarmor -> local
-scp -pr nbarrier@datarmor.ifremer.fr:data_to_send receive_dir
 ```
 
-Dossiers importants
-===================
+Pour se connecter a la machine sans mot de passe, il faut utiliser un chiffrage RSA:
+
+``` {.csh language="csh"}
+# generate a RSA public/private key pair
+# if you have one, skip this step
+ssh-keygen  
+
+# send the key to your datarmor account
+ssh-copy-id nbarrier@datarmor.ifremer.fr
+```
+
+# Dossiers importants
 
 Les dossiers importants sont:
 
@@ -50,8 +53,7 @@ En general, les jobs doivent tourner sur `$SCRACTH`, apres y avoir copie
 les codes depuis `$HOME` et les donnees depuis `$SCRATCH`. Mais
 possibilite de faire tourner les codes depuis `$DATAWORK` directement.
 
-Modules
-=======
+# Modules
 
 Pour lister les differents modules disponibles:
 
@@ -73,19 +75,24 @@ Pour charger un module:
     module load vacumm/3.4.0-intel   # charge une version specifique
 ```
 
-Pour enlever les modules charges:
+Pour desactiver un module:
+
+``` {.csh language="csh"}
+    module unload R
+```
+
+Pour enlever tous les modules charges:
 
 ``` {.csh language="csh"}
     module purge
 ```
 
-Reglages par default
-====================
+# Reglages par default
 
 Pour changer le comportement par default, il faut creer/editer le
 fichier `${HOME}/.cshrc`.
 
-On peut soit ajouter de nouveaux raccourcis soit changer le comportement
+On peut soit ajouter de nouveaux raccourcis (alias) soit changer le comportement
 par defaut de certaines commandes
 
         # nouveaux raccourcis
@@ -102,16 +109,14 @@ par defaut de certaines commandes
 On peut aussi definir des variables d'environnement supplementaires (par
 exemple lieu d'installation des librairies R):
 
-        setenv R_LIBS $HOME/libs/R/lib
+        setenv R_LIBS_USER $HOME/libs/R/lib
 
-Lancement de Job
-================
+# Lancement de Job
 
 Des exemples de scripts de lancement de jobs se trouvent dans le dossier
 datarmor `/appli/services/exemples/`
 
-Interactif
-----------
+## Interactif
 
 Pour se connecter de maniere interactive sur un noeud de calcul, il faut
 taper dans le terminal:
@@ -123,8 +128,7 @@ qsub -I -l walltime=30:00:00 -lmem=100g
 L'argument `-lmem` specifie la memoire demandee, l'argument
 `-l walltime` le temps de calcul demande.
 
-Bash mode
----------
+## Bash mode
 
 Pour faire tourner des codes de maniere non interactive, il faut ecrire
 un script de lancement de job, qui sera lance avec la commande `qsub`:
@@ -225,8 +229,7 @@ Le premier argument est le nom du dossier Datarmor que vous voulez
 monter, le deuxieme est le dossier destination dans lequel ce montage
 sera fait.
 
-External Data Exchange
-======================
+# External Data Exchange
 
 To exchange heavy data from outside the Ifremer Network, you need to
 have a `$SCRATCH/eftp` directory on your datarmor account.
@@ -248,3 +251,8 @@ Connect using your extranet account. Then:
     mget *  # send all files in $SCRATCH/eftp/ to the local directory
     put file.nc  # send local file.nc to the $SCRATCH/eftp/
     mput *  # send all files in local directory to the $SCRATCH/eftp/
+    
+ # Setting up software environment
+ 
+ 
+  
