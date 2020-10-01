@@ -1,11 +1,4 @@
----
-author:
-- Nicolas Barrier
-date: February 2019
-title: Datarmor documentation
----
 
-\maketitle
 Connection
 ==========
 
@@ -13,7 +6,7 @@ Windows
 -------
 
 Connection via [Putty](https://www.putty.org/) (login + mdp intranet
-ifremer)\
+ifremer)
 
 ![image](figs/Capture_putty.PNG)
 
@@ -72,7 +65,7 @@ Pour lister les differents modules de charges:
     module list
 ```
 
-Pour charger un module:\
+Pour charger un module:
 
 ``` {.csh language="csh"}
     module load R   # charge un module
@@ -90,7 +83,8 @@ Reglages par default
 ====================
 
 Pour changer le comportement par default, il faut creer/editer le
-fichier `${HOME}/.cshrc`.\
+fichier `${HOME}/.cshrc`.
+
 On peut soit ajouter de nouveaux raccourcis soit changer le comportement
 par defaut de certaines commandes
 
@@ -140,11 +134,13 @@ qsub run_script.pbs
 ```
 
 Les sorties du job seront mises dans le fichier `run_script.pbs.oXXXX`,
-avec `XXXX` l'identification du job.\
+avec `XXXX` l'identification du job.
+
 Des exemples sont fournis par datarmor dans le dossier
 `/appli/services/exemples/` (dossiers `R` et `pbs`). Deux exemples sont
 fournis ci-dessous, un en CSH (le default de Dataror) et un autre en
-BASH.\
+BASH.
+
 Script en CSH:
 
 ``` {.csh language="csh"}
@@ -180,7 +176,7 @@ date
 ```
 
 \vspace{1em}
-Script en BASH:\
+Script en BASH:
 
 ``` {.bash language="bash"}
 #!/bin/bash
@@ -233,8 +229,10 @@ External Data Exchange
 ======================
 
 To exchange heavy data from outside the Ifremer Network, you need to
-have a `$SCRATCH/eftp` directory on your datarmor account.\
-Move to the source/destination directory.\
+have a `$SCRATCH/eftp` directory on your datarmor account.
+
+Move to the source/destination directory.
+
 Then, connect to the FTP as follows:
 
     ftp eftp.ifremer.fr
