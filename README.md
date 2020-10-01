@@ -15,11 +15,11 @@ Windows
 Connection via [Putty](https://www.putty.org/) (login + mdp intranet
 ifremer)\
 
-![image](Capture_putty.PNG)
+![image](figs/Capture_putty.PNG)
 
 Echange de donnees via [FileZilla](https://filezilla-project.org/).
 
-![image](filezilla_short.png)
+![image](figs/filezilla_short.png)
 
 Linux / Mac Os X
 ----------------
