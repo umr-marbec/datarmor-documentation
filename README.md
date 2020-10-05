@@ -8,7 +8,9 @@ Documentation Datarmor
 Connection via [Putty](https://www.putty.org/) (login + mdp intranet
 ifremer)
 
-![image](figs/Capture_putty.PNG)
+<div align="center">
+    <img src="figs/Capture_putty.PNG">
+</div>
 
 <!-- Echange de donnees via [FileZilla](https://filezilla-project.org/).
 
@@ -302,7 +304,9 @@ Conda est principalement utilise avec Python, mais peut aussi etre utilise avec 
 conda create -n r-env r-base 
 ```
 
-Note that R packages all start with the `r-` prefix.
+Le nouvel environnement cree s'appelle `r-env` et contient le package `r-base`
+
+Noter que les packages R commencent par le prefixe `r-`.
 
 # Telechargement de donnees depuis Datarmor
 
