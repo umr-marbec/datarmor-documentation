@@ -218,20 +218,20 @@ Le premier argument est le nom du dossier Datarmor que vous voulez
 monter, le deuxieme est le dossier destination dans lequel ce montage
 sera fait.
 
-# External Data Exchange
+# Echange de donnee avec/depuis datarmoor
 
-To exchange heavy data , you need to
-have a `$SCRATCH/eftp` directory on your datarmor account.
+Pour echanger des donnees entre Datarmor et une machine en local, il faut
+par le dossier `$SCRATCH/eftp` de Datarmor.
 
-On your local computer, move to the source/destination directory.
+En local, naviguer depuis le terminal dans le dossier source/destination en utilisant `cd`
 
-Then, connect to the FTP as follows:
+Puis se connecter au FTP en tapant:
 
 ```
 ftp eftp.ifremer.fr
 ```
 
-Connect using your extranet account. Then:
+Renseigner ses identifiants **extranet** puis taper:
 
 ```
 cd scratch   # WARNING, DON'T FORGET!
@@ -242,9 +242,9 @@ put file.nc  # send local file.nc to the $SCRATCH/eftp/
 mput *  # send all files in local directory to the $SCRATCH/eftp
 ```
 
-Note that `eftp.ifremer.fr` can also be accessed using FileZilla.
+**Note: `eftp.ifremer.fr` est aussi accessible en passant par FileZilla. **
     
-# Setting up software environment
+# Environnement logiciel
  
 Afin de mettre en place des environnements logiciels non disponibles via les modules, il faut utiliser
 le gestionnaire de paquets multilangages **conda** (cf. [Conda sur Datarmor](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/Datarmor-Calcul-et-Donnees/Datarmor-calcul-et-programmes/Pour-aller-plus-loin/,DanaInfo=w3z.ifremer.fr,SSL+Conda-sur-Datarmor)). 
@@ -303,5 +303,24 @@ conda create -n r-env r-base
 ```
 
 Note that R packages all start with the `r-` prefix.
- 
-  
+
+# Telechargement de donnees depuis Datarmor
+
+Pour recuperer des donnes sur un FTP depuis Datarmor, il faut:
+- soit passer par un job soummis sur la queue FTP en specifiant `-q ftp`
+- soit se connecter sur la machine `datasession0` en tapant `ssh datasession0`
+
+Ci dessous un exemple de fichier `.pbs` permettant de telecharger des donnees depuis l'exterieur 
+(inspire de `/appli/services/exemples/pbs/ftp.pbs`)
+
+```
+#!/bin/csh
+#PBS -q ftp
+#PBS -l walltime=02:15:00
+
+cd $PBS_O_WORKDIR
+
+# time lftp ... >& output
+# time rsync -av /chemin/source/ login@server:/autre/chemin/destination >& output
+```
+
