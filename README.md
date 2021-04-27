@@ -52,7 +52,7 @@ Les dossiers importants sont:
     y laisser)
 
 En general, les jobs doivent tourner sur `$SCRACTH`, apres y avoir copie
-les codes depuis `$HOME` et les donnees depuis `$SCRATCH`. Mais
+les codes depuis `$HOME` et les donnees depuis `$DATAWORK`. Mais
 possibilite de faire tourner les codes depuis `$DATAWORK` directement.
 
 # Modules
