@@ -14,6 +14,10 @@ Depuis l'exterieur, il faut d'abord télécharger PuseSecure sur le liens suivan
 
 Ensuite, rajouter une connection VPN, en renseignant comme URL: https://domicile.ifremer.fr/calcul
 
+<div align="center">
+    <img src="figs/screenshot_pulse_secure.png">
+</div>
+
 Se connecter sur le VPN avec les logins Extranet.
 
 ## Windows
