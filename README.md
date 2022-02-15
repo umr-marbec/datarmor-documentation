@@ -3,6 +3,19 @@ Documentation Datarmor
 
 # Connection
 
+## Depuis l'exterieur
+
+Depuis l'exterieur, il faut d'abord télécharger PuseSecure sur le liens suivants: [PulseSecure](https://domicile.ifremer.fr/index.php/s/WC9GArY8Eo51yZE/,DanaInfo=cloud.ifremer.fr,SSL+download?path=%2F&files). Ensuite, il faut installer la version qui correspond à l'OS
+
+- Windows 64: `PulseSecure.x86.msi`
+- Mac Os X 64: `PulseSecure.dmg`
+- Ubuntu 20.04: `pulsesecure_9.1.R12_amd64.deb`
+- Ubuntu 18.04: `pulse-9.1R8.x86_64.deb`
+
+Ensuite, rajouter une connection VPN, en renseignant comme URL: https://domicile.ifremer.fr/calcul
+
+Se connecter sur le VPN avec les logins Extranet.
+
 ## Windows
 
 Connection via [Putty](https://www.putty.org/) (login + mdp intranet
@@ -23,7 +36,7 @@ Connection et echange possible via Putty, mais aussi via le terminal:
 
 ``` {.csh language="csh"}
 # connexion (login + mdp intranet ifremer)
-ssh nbarrier@datarmor.ifremer.fr
+ssh -X nbarrier@datarmor.ifremer.fr
 ```
 
 Pour se connecter a la machine sans mot de passe, il faut utiliser un chiffrage RSA:
