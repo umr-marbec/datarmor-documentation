@@ -20,6 +20,8 @@ Ensuite, rajouter une connection VPN, en renseignant comme URL: https://domicile
 
 Se connecter sur le VPN avec les logins Extranet.
 
+Source: [Ifremer](https://domicile.ifremer.fr/intraric/content/download/127699/file/,DanaInfo=w3z.ifremer.fr,SSL+Datarmor-depuis-exterieur.pdf)
+
 ## Windows
 
 Connection via [Putty](https://www.putty.org/) (login + mdp intranet
