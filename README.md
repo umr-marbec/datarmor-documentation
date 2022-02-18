@@ -413,13 +413,7 @@ Replace the first line by a folder of your choice. It will contain your own envi
 
 ---
 
-# Conda: environments
-
-To create a new environment: 
-
-```
-conda create --name new-env
-```
+# Conda: using environments
 
 To list the environments:
 
@@ -427,11 +421,26 @@ To list the environments:
 conda env list
 ```
 
-To activate/deactivate an environment:
+To activate an environment:
 
 ```
 conda activate pyngl
+```
+
+To deactivate an environment:
+
+```
 conda deactivate pyngl
+```
+
+---
+
+# Conda: creating environments
+
+To create a new environment: 
+
+```
+conda create --name new-env
 ```
 
 To install packages in the activated environment:
@@ -440,14 +449,71 @@ To install packages in the activated environment:
 conda install package_name
 ```
 
----
-
-# Conda: example (R ggplot2)
+For a R environment:
 
 ```
 conda create --name r-env
-
 conda activate r-env
-
 conda install r r-base r-ggplot2
+```
+
+---
+
+# Using Jupyter
+
+In order to process data interactively, you can use Jupyter/Jupylab. To do so, connect on https://datarmor-jupyterhub.ifremer.fr/ with your Intranet login.
+
+<div align="center">
+    <img height=400 src="figs/jupy1.png">
+</div>
+
+---
+
+# Using Jupyter
+
+Now, select the resources that you want (core + memory) and eventually specify a Conda environment.
+
+<div align="center">
+    <img height=400 src="figs/jupy2.png">
+</div>
+
+---
+
+# Using Jupyter
+
+To use Jupyter with one of your own conda environment, you will need to install the following Conda packages
+
+```
+conda install jupyter-server-proxy \
+              jupyter_client \ 
+              jupyter_core \ 
+              jupyter_server \ 
+              jupyter_telemetry \ 
+              jupyterhub \
+              jupyterhub-base \ 
+              jupyterlab \ 
+              jupyterlab_pygment \ 
+              jupyterlab_server
+```
+
+---
+
+# Using Jupyter
+
+To use Jupyter with R scripts, you will need to install:
+
+```
+conda install r-irkernelr
+```
+
+To use Jupyter with Matlab:
+
+```
+conda install octave_kernel
+```
+
+To use Jupyter with Matlab:
+
+```
+conda install matlab_kernel
 ```
