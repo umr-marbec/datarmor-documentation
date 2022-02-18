@@ -95,6 +95,16 @@ For Windows Users, it is recommended to use [Putty](https://www.chiark.greenend.
 
 ---
 
+# Connection: Putty (Windows)
+
+To allow display, you need to enable X11 forwarding on the `Connection > SSH` menu:
+
+<div align="center">
+    <img height=500 src="figs/putty_config1.webp">
+</div>
+
+---
+
 # Navigating in Datarmor
 
 Datarmor is a Unix computer. You need some Linux background.
