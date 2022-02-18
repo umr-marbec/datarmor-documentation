@@ -346,112 +346,108 @@ If you requested more memory/walltime than you used, adapt your needs.
 
 ---
 
-# Exchange between local computer and Datarmor
+# Data exchange with Datarmor: local
 
- 
+Data exchange with Datarmor should not be done on the compute node, especially so for heavy files.
 
-Pour echanger des donnees entre Datarmor et une machine en local, il faut
-par le dossier `$SCRATCH/eftp` de Datarmor.
+To exchange data, use the `eftp.ifremer.fr` server. 
 
-En local, naviguer depuis le terminal dans le dossier source/destination en utilisant `cd`
+> **Warning: for some reason, eftp.ifremer.fr is not secure. I recommend to change the extranet password ([here](https://domicile.ifremer.fr/,DanaInfo=chpass.ifremer.fr,SSL,SSO=U+)) before using it.**
 
-Puis se connecter au FTP en tapant:
-
-```
-ftp eftp.ifremer.fr
-```
-
-Renseigner ses identifiants **extranet** puis taper:
-
-```
-cd scratch   # WARNING, DON'T FORGET!
-prompt  # activate/deactivate interactive mode
-get file.nc  # send $SCRATCH/eftp/file.nc to the local directory
-mget *  # send all files in $SCRATCH/eftp/ to the local directory
-put file.nc  # send local file.nc to the $SCRATCH/eftp/
-mput *  # send all files in local directory to the $SCRATCH/eftp
-```
-
-**Note: `eftp.ifremer.fr` est aussi accessible en passant par FileZilla. **
+You can use FileZilla as follows:
 
 ---
 
-# Environnement logiciel
- 
-Afin de mettre en place des environnements logiciels non disponibles via les modules, il faut utiliser
-le gestionnaire de paquets multilangages **conda** (cf. [Conda sur Datarmor](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/Datarmor-Calcul-et-Donnees/Datarmor-calcul-et-programmes/Pour-aller-plus-loin/,DanaInfo=w3z.ifremer.fr,SSL+Conda-sur-Datarmor)). 
+# Data exchange with Datarmor: remote server
 
-Une introduction generale a conda est disponible [ici](https://github.com/umr-marbec/python-training/blob/master/introduction/libinstall.ipynb)
-
-Pour l'activer sur Datarmor, ajouter dans son fichier `.cshrc`:
-
-```
-source /appli/anaconda/latest/etc/profile.d/conda.csh
-```
-
----
-
-# Environnement logiciel
-
-Afin de recuperer les environnements conda deja installes sur Datarmor, creer le fichier `~/.condarc` et y mettre:
-
-```
-envs_dirs:
-- /home1/datahome/nbarrier/softwares/anaconda3-envs
-- /appli/conda-env
-- /appli/conda-env/2.7
-- /appli/conda-env/3.6
-pkgs_dirs:
-- $DATAWORK/conda/pkgs
-```
-
-Pour lister les environnements conda disponibles, taper:
-
-```
-conda env list
-```
-
-
-Les nouveaux environnements vont etre installes dans `/home1/datahome/nbarrier/softwares/anaconda3-envs`.
-
----
-
-
-Pour activer/desactiver un environnement virtuel:
-
-```
-conda activate pyngl
-conda deactivate pyngl
-```
-
-Conda est principalement utilise avec Python, mais peut aussi etre utilise avec R. Pour creer un environnement virtuel pour R:
-
-```
-conda create -n r-env r-base 
-```
-
-Le nouvel environnement cree s'appelle `r-env` et contient le package `r-base`
-
-Noter que les packages R commencent par le prefixe `r-`.
-
----
-
-# Telechargement de donnees depuis Datarmor
-
-Pour recuperer des donnes sur un FTP depuis Datarmor, il faut:
-- soit passer par un job soummis sur la queue FTP en specifiant `-q ftp`
-- soit se connecter sur la machine `datasession0` en tapant `ssh datasession0`
-
-Ci dessous un exemple de fichier `.pbs` permettant de telecharger des donnees depuis l'exterieur 
-(inspire de `/appli/services/exemples/pbs/ftp.pbs`)
+To recover data from a remote FTP server, submit a job on the `ftp` queue. An exemple is provided below (inspired from `/appli/services/exemples/pbs/ftp.pbs`)
 
 ```
 #!/bin/csh
 #PBS -q ftp
 #PBS -l walltime=02:15:00
 
-cd $PBS_O_WORKDIR
+cd $DATAWORK
 
-# time lftp ... >& output
-# time rsync -av /chemin/source/ login@server:/autre/chemin/destination >& output
+time lftp ...
+time rsync -av login@server:/source/folder /destination/folder/  >& output
+```
+
+This will need some adaptation depending on the remote server.
+
+---
+
+# Conda environments
+
+Sometimes, you might need external tools that are not available. For instance, `ffmpeg` for making movies, `maven` for Java compilation, etc.
+
+One way to use these tools is to use [Conda](https://docs.conda.io/en/latest/) environments, which is possible on Datarmor (cf. [Conda sur Datarmor](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/Datarmor-Calcul-et-Donnees/Datarmor-calcul-et-programmes/Pour-aller-plus-loin/,DanaInfo=w3z.ifremer.fr,SSL+Conda-sur-Datarmor)). 
+
+First, edit your `.cshrc` file (using `gedit $HOME/.cshrc &`) and add:
+
+```
+source /appli/anaconda/latest/etc/profile.d/conda.csh
+```
+
+This will make accessible the `conda` commands.
+
+---
+
+# Conda: settings
+
+Now, create a `.condarc` using `gedit $HOME/.condarc` and write:
+
+```
+envs_dirs:
+- /my/env/folder
+- /home1/datahome/nbarrier/softwares/anaconda3-envs
+- /appli/conda-env
+- /appli/conda-env/2.7
+- /appli/conda-env/3.6
+channels:
+  - conda-forge
+  - defaults
+```
+
+Replace the first line by a folder of your choice. It will contain your own environments
+
+---
+
+# Conda: environments
+
+To create a new environment: 
+
+```
+conda create --name new-env
+```
+
+To list the environments:
+
+```
+conda env list
+```
+
+To activate/deactivate an environment:
+
+```
+conda activate pyngl
+conda deactivate pyngl
+```
+
+To install packages in the activated environment:
+
+```
+conda install package_name
+```
+
+---
+
+# Conda: example (R ggplot2)
+
+```
+conda create --name r-env
+
+conda activate r-env
+
+conda install r r-base r-ggplot2
 ```
