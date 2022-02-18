@@ -413,7 +413,7 @@ Replace the first line by a folder of your choice. It will contain your own envi
 
 ---
 
-# Conda: using environments
+# Conda: using existing environments
 
 To list the environments:
 
@@ -455,6 +455,12 @@ For a R environment:
 conda create --name r-env
 conda activate r-env
 conda install r r-base r-ggplot2
+```
+
+To remove:
+
+```
+conda env remove --name r-test
 ```
 
 ---
@@ -506,7 +512,7 @@ To use Jupyter with R scripts, you will need to install:
 conda install r-irkernelr
 ```
 
-To use Jupyter with Matlab:
+To use Jupyter with Octave:
 
 ```
 conda install octave_kernel
@@ -516,4 +522,11 @@ To use Jupyter with Matlab:
 
 ```
 conda install matlab_kernel
+```
+
+To use Jupyter with Julia, run Julia and type:
+
+```
+using Pkg
+Pkg.add("IJulia")
 ```
