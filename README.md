@@ -105,7 +105,7 @@ To allow display, you need to enable X11 forwarding on the `Connection > SSH` me
 
 ---
 
-# Navigating in Datarmor
+# Navigating on Datarmor
 
 Datarmor is a Unix computer. You need some Linux background.
 
@@ -126,18 +126,18 @@ Visit [linux-commands-cheat-sheet](https://linoxide.com/linux-commands-cheat-she
 Important folders are:
 
 -   `$HOME`: main folder (50 Mo, backed-up). For codes and important things
--   `$DATAWORK`: data folder (1 To, **no back-up**). Contains data files (NetCDF).
--   `$SCRATCH`: temporary folder (10 To, cleaned every 10 days). Used to run the computation.
+-   `$DATAWORK`: data folder (1 To, **no back-up**).
+-   `$SCRATCH`: temporary folder (10 To, files older than 10 days are automatically removed). Used to run the computation.
 
 In general, computation should follow these steps: 
-- Copy codes from `HOME` to `SCRATCH`
-- Copy data from `DATAWORK` to `SCRATCH`
-- Go to `SCRATCH` and run the computatiob
-- Copy output files from `SCRATCH` to `DATAWORK`
+- Copy codes from `$HOME` to `$SCRATCH`
+- Copy data from `$DATAWORK` to `$SCRATCH`
+- Go to `$SCRATCH` and run the computatiob
+- Copy output files from `$SCRATCH` to `$DATAWORK`
 
 ---
 
-# Modules
+# Modules (1/2)
 
 To work with external tools, you need to load them into Datarmor's memory. This is done as follows:
 
@@ -162,7 +162,7 @@ module list
 
 ---
 
-# Modules
+# Modules (2/2)
 
 
 To deactivate a module:
@@ -179,7 +179,7 @@ module purge
 
 ---
 
-# Default settings
+# Default settings (2/2)
 
 To change some default behaviours, you need to create/edit the Linux configuration file.
 
@@ -193,12 +193,11 @@ gedit ${HOME}/.cshrc $
 
 ---
 
-# Default settings
+# Default settings (1/2)
 
 In the `.cshrc` file, you can define new shortcuts:
 
 ```{.csh language="csh"}
-# nouveaux raccourcis
 alias x 'exit'
 alias rm 'rm -i -v'
 alias cp 'cp -i -v -p'
@@ -221,115 +220,135 @@ module load NETCDF
 
 ---
 
-# Lancement de Job: interactif
+# Running a calculation
 
-Pour se connecter de maniere interactive sur un noeud de calcul, il faut
-taper dans le terminal:
+When you connect on Datarmor, you are on the **login node**.  It is used to navigate, manipulate small files, eventually compile the codes.
 
-``` {.csh language="csh"}
-qsub -I -l walltime=30:00:00 -lmem=100g
-```
+**But absolutely no computation or heavy file manipulation should be done from here!!!**
 
-L'argument `-lmem` specifie la memoire demandee, l'argument
-`-l walltime` le temps de calcul demande.
+To switch to a compute node, you need to create a PBS job using the `qsub` command.
 
 ---
 
-# Running a job: PBS
+# Running a job: interactive mode.
 
-Pour faire tourner des codes de maniere non interactive, il faut ecrire
-un script de lancement de job, qui sera lance avec la commande `qsub`:
+To run a sequential, interactive job, type the following:
+
+``` {.csh language="csh"}
+qsub -I -l walltime=30:00:00 -l mem=100g
+```
+
+The `-l mem` specifies the requested memory, 
+`-l walltime` specifies the requested calculation time.
+
+Sequential jobs can be used to move/copy heavy data files (movies, model forcings, model outputs, etc.) from one place to another.
+
+---
+
+# Running a job: PBS script
+
+To run a job in a non-interactive way, you need to create a `.pbs` file, which contains the instructions for running your job.
+
+When done, run the calculation as follows:
 
 ``` {.csh language="csh"}
 qsub run_script.pbs
 ```
 
-Les sorties du job seront mises dans le fichier `run_script.pbs.oXXXX`,
-avec `XXXX` l'identification du job.
+Job output files will be provided in a `run_script.pbs.oXXXX` file, with `XXXX` the job ID.
 
-Des exemples sont fournis par datarmor dans le dossier
-`/appli/services/exemples/` (dossiers `R` et `pbs`). Deux exemples sont
-fournis ci-dessous, un sequentiel et un en parallel.
+Some examples are provided in Datarmor's `/appli/services/exemples/` folder (see the `R` and `pbs` sub-folders).
 
 ---
 
-# Running a sequential job
+# Running a job: PBS script (sequential)
 
 ``` {.csh language="csh"}
 #!/bin/csh
-#PBS -l mem=1g
-#PBS -l walltime=00:30:00
-# First line defines the memory used
-# Second line defines the "walltime" (if time > walltime, job is killed)
-
-# go to the directory where the job has been run
-# cd $PBS_O_WORKDIR
-
-# copy the code into the SCRATCH dir
-cp -pr $HOME/code $SCRACTH
-
-# copy the input data into the SCRATCH dir
-cp -pr $DATAWORK/data $SCRACTH
-
-# move to the SCRATCH directory
-cd $SCRATCH
+#PBS -l mem=10Mo
+#PBS -l walltime=00:00:05
 
 # Load the modules that will be used to do the job
 source /usr/share/Modules/3.2.10/init/csh
 module load R
 
-# indique ou trouver les librairies R installees a la main.
-setenv R_LIBS_USER $HOME/libs/R/lib
+# go to the directory where the job has been run
+cd $PBS_O_WORKDIR
+
+cat > script.R <<EOF
+x = c(1, 2, 3, 4)
+print(x)
+EOF
 
 # Run R
-date
 Rscript script.R >& output.log  # redirects outputs into log
-date
 ```
 
 ---
 
-# Running a parralel job
+# Running a job: PBS script (parallel)
+
+Parallel jobs are run in the same way, except that a queue (`-q`) parameter is added. It specifies the number of **nodes** that you use. 1 node is 28 cores.
 
 ``` {.bash language="csh"}
 #!/bin/csh
+#PBS -l mem=10Mo
 #PBS -q mpi_2
 #PBS -l walltime=00:05:00
-# example of using 2node, i.e. 2*28 mpi procs
-# cd to the directory you submitted your job
 cd $PBS_O_WORKDIR
 
 source /usr/share/Modules/3.2.10/init/csh
-module load   NETCDF/4.3.3.1-mpt-intel2016
- 
-setenv mpiproc `cat $PBS_NODEFILE  |wc -l`
-echo "submit job with  $NETCDF_MODULE "
-echo "job running with  $mpiproc mpi process "
+module load NETCDF/4.3.3.1-mpt-intel2016
 
 date
-time $MPI_LAUNCH exe >& out
+time $MPI_LAUNCH program.exe >& out
 date
 ```
+
+So here, the program uses 48 cores in total.
+
+---
+
+# Datarmor queues
+
+The full description of Datarmor is provided [here](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/Datarmor-Calcul-et-Donnees/Datarmor-calcul-et-programmes/,DanaInfo=w3z.ifremer.fr,SSL+Queues-d-execution-PBS-Configuration-detaillee). The main queues are listed below:
+- `sequentiel`: the default one (single core)
+- `omp`: shared-memory queue (several nodes with access to the same memory).
+- `mpi_N`: distributed memory queue (several nodes with independent memories), with `N` ranging from 1 (28 cores) to 18 (504 cores)
+- `big`: distributed memory with 1008 cores.
+- `ftp`: queue used to download data from remote FTP servers
+- `gpuq`: GPU queue.
 
 ---
 
 # Following your jobs
 
+To follow the status of your job:
+
 ``` {.csh language="csh"}
-# suivi des jobs pour un utilisateur donne
 qstat -u nbarrier
-    
-# supprimer un JOB
-qdel JOB_ID   # job ID est fourni par qstat
 ```
 
-Le premier argument est le nom du dossier Datarmor que vous voulez
-monter, le deuxieme est le dossier destination dans lequel ce montage
-sera fait.
+To suppress a job:
+
+``` {.csh language="csh"}
+qdel JOB_ID 
+```
+
+At the end of the job, check the email you receive and look for the following lines:
+
+```
+resources_used.mem=12336kb
+resources_used.walltime=00:00:24
+```
+
+If you requested more memory/walltime than you used, adapt your needs.
 
 ---
 
-# Echange de donnee avec/depuis datarmor
+# Exchange between local computer and Datarmor
+
+ 
 
 Pour echanger des donnees entre Datarmor et une machine en local, il faut
 par le dossier `$SCRATCH/eftp` de Datarmor.
