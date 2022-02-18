@@ -1,147 +1,217 @@
-Documentation Datarmor
-==========================
+---
+marp: true
+title: datarmor_training
+theme: theme-den
+paginate: true
+---
 
-# Connection
+# Datarmor Training
 
-## Depuis l'exterieur
+## Nicolas Barrier ([nicolas.barrier@ird.fr](mailto:nicolas.barrier@ird.fr))
 
-Depuis l'exterieur, il faut d'abord télécharger PuseSecure sur le liens suivants: [PulseSecure](https://domicile.ifremer.fr/index.php/s/WC9GArY8Eo51yZE/,DanaInfo=cloud.ifremer.fr,SSL+download?path=%2F&files). Ensuite, il faut installer la version qui correspond à l'OS
+---
+
+# What is Datarmor?
+
+Datarmor is a High-Performance Computer (HPC): 
+- CPU : 11088 cores (My PC: 12 cores)
+- RAM: 128 Go (My PC: 32 Go)
+- Storage: 5 Po = 5000 To (My PC: 1 To).
+- Hosting of web services (Jupyter Notebooks, visualuzation nodes)
+
+Source: [Ifremer](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/,DanaInfo=w3z.ifremer.fr,SSL+Qu-est-ce-que-Datarmor)
+
+---
+
+# Pulse Secure: install
+
+Outside the Ifremer Network, PulseSecure is required. It can be downloaded [here](https://domicile.ifremer.fr/index.php/s/WC9GArY8Eo51yZE/,DanaInfo=cloud.ifremer.fr,SSL+download?path=\%2F&files). 
+
+Install the right version depending on your OS:
 
 - Windows 64: `PulseSecure.x86.msi`
 - Mac Os X 64: `PulseSecure.dmg`
 - Ubuntu 20.04: `pulsesecure_9.1.R12_amd64.deb`
 - Ubuntu 18.04: `pulse-9.1R8.x86_64.deb`
 
-Ensuite, rajouter une connection VPN, en renseignant comme URL: https://domicile.ifremer.fr/calcul
+---
+
+# Pulse Secure: set-up
+
+Now set-up a new connection as follows:
 
 <div align="center">
     <img src="figs/screenshot_pulse_secure.png">
 </div>
 
-Se connecter sur le VPN avec les logins Extranet.
+Connect to the Datarmor VPN using your **extranet** logins.
 
-Source: [Ifremer](https://domicile.ifremer.fr/intraric/content/download/127699/file/,DanaInfo=w3z.ifremer.fr,SSL+Datarmor-depuis-exterieur.pdf)
+---
+# Connection: Terminal (Linux / Mac Os X)
 
-## Windows
-
-Connection via [Putty](https://www.putty.org/) (login + mdp intranet
-ifremer)
-
-<div align="center">
-    <img src="figs/Capture_putty.PNG">
-</div>
-
-<!-- Echange de donnees via [FileZilla](https://filezilla-project.org/).
-
-![image](figs/filezilla_short.png)
--->
-
-## Linux / Mac Os X
-
-Connection et echange possible via Putty, mais aussi via le terminal:
-
-``` {.csh language="csh"}
-# connexion (login + mdp intranet ifremer)
+For Linux/Mac Os X users, open a Terminal and types:
+ 
+```
 ssh -X nbarrier@datarmor.ifremer.fr
 ```
 
-Pour se connecter a la machine sans mot de passe, il faut utiliser un chiffrage RSA:
+replacing `nbarrier` by your **intranet** login. The `-X` option allows display (for use of text editors for instance).
+
+
+> For Mac Os X users, I recommend to install and use [iTerm2](https://iterm2.com/) Terminal application, which is more user friendly than the default one.
+
+---
+
+# RSA keys (Linux / Mac Os X)
+
+To connect on Datarmor without typing the password, you need to use a RSA key. First, check if one already exists:
 
 ``` {.csh language="csh"}
-# generate a RSA public/private key pair
-# if you have one, skip this step
-ssh-keygen  
+ls $HOME/.ssh/id_rsa.pub
+```
 
-# send the key to your datarmor account
+If no such file, generate a key using
+
+``` {.csh language="csh"}
+ssh-keygen  
+```
+
+and follows instructions. Then, send it to Datarmor:
+
+```
 ssh-copy-id nbarrier@datarmor.ifremer.fr
 ```
 
-# Dossiers importants
+---
 
-Les dossiers importants sont:
 
--   `$HOME`: dossier de travail (50 Mo, sauvegarde). Pour les codes et
-    les choses importantes
+# Connection: Putty (Windows)
 
--   `$DATAWORK`: espace de travail, plus d'espace, non sauvegarde (pour
-    les donnees)
+For Windows Users, it is recommended to use [Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) 
 
--   `$SCRATCH`: espace temporaire utilise pour faire tourner les
-    modeles. Grosse memoire, mais effacee de maniere reguliere (ne rien
-    y laisser)
+<div align="center">
+    <img height=500 src="figs/Capture_putty.PNG">
+</div>
 
-En general, les jobs doivent tourner sur `$SCRACTH`, apres y avoir copie
-les codes depuis `$HOME` et les donnees depuis `$DATAWORK`. Mais
-possibilite de faire tourner les codes depuis `$DATAWORK` directement.
+---
+
+# Navigating in Datarmor
+
+Datarmor is a Unix computer. You need some Linux background.
+
+- Change directory: `cd my/new/directory`
+- Go to parent directory: `cd ..`
+- Create new folder: `mkdir -p folder_name`
+- Copy a file: `cp file.txt save_file.txt`
+- Rename/Move a file: `mv file.text my/dest/renamed.txt`
+
+Visit [linux-commands-cheat-sheet](https://linoxide.com/linux-commands-cheat-sheet/) for a summary of essentials Linux commands.
+
+
+---
+
+
+# Important folders
+
+Important folders are:
+
+-   `$HOME`: main folder (50 Mo, backed-up). For codes and important things
+-   `$DATAWORK`: data folder (1 To, **no back-up**). Contains data files (NetCDF).
+-   `$SCRATCH`: temporary folder (10 To, cleaned every 10 days). Used to run the computation.
+
+In general, computation should follow these steps: 
+- Copy codes from `HOME` to `SCRATCH`
+- Copy data from `DATAWORK` to `SCRATCH`
+- Go to `SCRATCH` and run the computatiob
+- Copy output files from `SCRATCH` to `DATAWORK`
+
+---
 
 # Modules
 
-Pour lister les differents modules disponibles:
+To work with external tools, you need to load them into Datarmor's memory. This is done as follows:
+
+``` {.csh language="csh"}
+module load R   # load one module
+module load java NETCDF  #  load 2 modules
+module load vacumm/3.4.0-intel  # load a specific version
+```
+
+To list all the available modules:
 
 ``` {.csh language="csh"}
 module avail
 ```
 
-Pour lister les differents modules de charges:
+To list the modules that you use:
 
 ``` {.csh language="csh"}
 module list
 ```
 
-Pour charger un module:
 
-``` {.csh language="csh"}
-module load R   # charge un module
-module load java NETCDF  #  charge 2 modules a la fois
-module load vacumm/3.4.0-intel   # charge une version specifique
-```
+---
 
-Pour desactiver un module:
+# Modules
+
+
+To deactivate a module:
 
 ``` {.csh language="csh"}
 module unload R
 ```
 
-Pour enlever tous les modules charges:
+To unload all the modules at once:
 
 ``` {.csh language="csh"}
 module purge
 ```
 
-# Reglages par default
+---
 
-Pour changer le comportement par default, il faut creer/editer le
-fichier `${HOME}/.cshrc`.
+# Default settings
 
-On peut soit ajouter de nouveaux raccourcis (alias) soit changer le comportement
-par defaut de certaines commandes
+To change some default behaviours, you need to create/edit the Linux configuration file.
+
+This can be done as follows:
+
+```
+gedit ${HOME}/.cshrc $
+```
+
+> The `&` character implies that you will keep access to your terminal. Else, the terminal will be back once the text editor is closed.
+
+---
+
+# Default settings
+
+In the `.cshrc` file, you can define new shortcuts:
 
 ```{.csh language="csh"}
 # nouveaux raccourcis
 alias x 'exit'
-alias c 'clear'
-        
-# remplacer le comportement par defaut
-# evite l'ecrasement de fichiers existant lors
-# des copies/renommage/deplacements et effacements
 alias rm 'rm -i -v'
 alias cp 'cp -i -v -p'
 alias mv 'mv -i -v'
 ```
 
-On peut aussi definir des variables d'environnement supplementaires (par
-exemple lieu d'installation des librairies R):
+You can also create environment variables:
 
 ```{.csh language="csh"}
 setenv R_LIBS_USER $HOME/libs/R/lib
 ```
 
-# Lancement de Job
+Now, you can access the above folder using `cd $R_LIBS_USER`
 
-Des exemples de scripts de lancement de jobs se trouvent dans le dossier
-datarmor `/appli/services/exemples/`
+You can also load your favorite modules in here:
 
-## Interactif
+```
+module load NETCDF
+```
+
+---
+
+# Lancement de Job: interactif
 
 Pour se connecter de maniere interactive sur un noeud de calcul, il faut
 taper dans le terminal:
@@ -153,7 +223,9 @@ qsub -I -l walltime=30:00:00 -lmem=100g
 L'argument `-lmem` specifie la memoire demandee, l'argument
 `-l walltime` le temps de calcul demande.
 
-## Bash mode
+---
+
+# Running a job: PBS
 
 Pour faire tourner des codes de maniere non interactive, il faut ecrire
 un script de lancement de job, qui sera lance avec la commande `qsub`:
@@ -169,7 +241,9 @@ Des exemples sont fournis par datarmor dans le dossier
 `/appli/services/exemples/` (dossiers `R` et `pbs`). Deux exemples sont
 fournis ci-dessous, un sequentiel et un en parallel.
 
-**Script sequentiel (lancement script R)**
+---
+
+# Running a sequential job
 
 ``` {.csh language="csh"}
 #!/bin/csh
@@ -203,7 +277,9 @@ Rscript script.R >& output.log  # redirects outputs into log
 date
 ```
 
-**Script en parralel (lancement programme MPI)**:
+---
+
+# Running a parralel job
 
 ``` {.bash language="csh"}
 #!/bin/csh
@@ -225,7 +301,9 @@ time $MPI_LAUNCH exe >& out
 date
 ```
 
-Commandes utiles pour suivre les jobs:
+---
+
+# Following your jobs
 
 ``` {.csh language="csh"}
 # suivi des jobs pour un utilisateur donne
@@ -239,7 +317,9 @@ Le premier argument est le nom du dossier Datarmor que vous voulez
 monter, le deuxieme est le dossier destination dans lequel ce montage
 sera fait.
 
-# Echange de donnee avec/depuis datarmoor
+---
+
+# Echange de donnee avec/depuis datarmor
 
 Pour echanger des donnees entre Datarmor et une machine en local, il faut
 par le dossier `$SCRATCH/eftp` de Datarmor.
@@ -264,7 +344,9 @@ mput *  # send all files in local directory to the $SCRATCH/eftp
 ```
 
 **Note: `eftp.ifremer.fr` est aussi accessible en passant par FileZilla. **
-    
+
+---
+
 # Environnement logiciel
  
 Afin de mettre en place des environnements logiciels non disponibles via les modules, il faut utiliser
@@ -278,10 +360,15 @@ Pour l'activer sur Datarmor, ajouter dans son fichier `.cshrc`:
 source /appli/anaconda/latest/etc/profile.d/conda.csh
 ```
 
+---
+
+# Environnement logiciel
+
 Afin de recuperer les environnements conda deja installes sur Datarmor, creer le fichier `~/.condarc` et y mettre:
 
 ```
 envs_dirs:
+- /home1/datahome/nbarrier/softwares/anaconda3-envs
 - /appli/conda-env
 - /appli/conda-env/2.7
 - /appli/conda-env/3.6
@@ -295,20 +382,11 @@ Pour lister les environnements conda disponibles, taper:
 conda env list
 ```
 
-Afin de definir un dossier contenant les futurs environnements, ajouter le dossier en question dans le fichier `.condarc` **en haut de la liste**.
-Par exemple, pour installer les environnements dans son $HOME:
-
-```
-envs_dirs:
-- /home1/datahome/nbarrier/softwares/anaconda3-envs
-- /appli/conda-env
-- /appli/conda-env/2.7
-- /appli/conda-env/3.6
-pkgs_dirs:
-- $DATAWORK/conda/pkgs
-```
 
 Les nouveaux environnements vont etre installes dans `/home1/datahome/nbarrier/softwares/anaconda3-envs`.
+
+---
+
 
 Pour activer/desactiver un environnement virtuel:
 
@@ -326,6 +404,8 @@ conda create -n r-env r-base
 Le nouvel environnement cree s'appelle `r-env` et contient le package `r-base`
 
 Noter que les packages R commencent par le prefixe `r-`.
+
+---
 
 # Telechargement de donnees depuis Datarmor
 
@@ -346,4 +426,3 @@ cd $PBS_O_WORKDIR
 # time lftp ... >& output
 # time rsync -av /chemin/source/ login@server:/autre/chemin/destination >& output
 ```
-
