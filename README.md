@@ -502,6 +502,8 @@ conda install jupyter-server-proxy \
               jupyterlab_server
 ```
 
+> I also suggest the install of `jupytext` to automatically export Notebooks  into script files
+
 ---
 
 # Using Jupyter
