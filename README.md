@@ -346,19 +346,27 @@ If you requested more memory/walltime than you used, adapt your needs.
 
 ---
 
-# Data exchange with Datarmor: local
+# Exchange between Datarmor and local computer
 
-Data exchange with Datarmor should not be done on the compute node, especially so for heavy files.
+Data exchange between local computer amnd Datarmor should not be done on the compute node, especially so for heavy files (**no use of `scp`**).
 
-To exchange data, use the `eftp.ifremer.fr` server. 
+To exchange data, use the `datacopy.ifremer.fr` server, to which you can connect using FTP. 
 
-> **Warning: for some reason, eftp.ifremer.fr is not secure. I recommend to change the extranet password ([here](https://domicile.ifremer.fr/,DanaInfo=chpass.ifremer.fr,SSL,SSO=U+)) before using it.**
+But you can also use FileZilla.
 
-You can use FileZilla as follows:
+> **Note:** you need to be on the Ifremer network. If not, the VPN should be on.
 
 ---
 
-# Data exchange with Datarmor: remote server
+# Exchange between Datarmor and local computer
+
+<div align="center">
+    <img height=500 src="figs/filezilla.png">
+</div>
+
+---
+
+# Exchange between Datarmor and remote server
 
 To recover data from a remote FTP server, submit a job on the `ftp` queue. An exemple is provided below (inspired from `/appli/services/exemples/pbs/ftp.pbs`)
 
