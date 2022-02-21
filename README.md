@@ -186,7 +186,7 @@ To change some default behaviours, you need to create/edit the Linux configurati
 This can be done as follows:
 
 ```
-gedit ${HOME}/.cshrc $
+gedit ${HOME}/.cshrc &
 ```
 
 > The `&` character implies that you will keep access to your terminal. Else, the terminal will be back once the text editor is closed.
