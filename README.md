@@ -132,7 +132,7 @@ Important folders are:
 In general, computation should follow these steps: 
 - Copy codes from `$HOME` to `$SCRATCH`
 - Copy data from `$DATAWORK` to `$SCRATCH`
-- Go to `$SCRATCH` and run the computatiob
+- Go to `$SCRATCH` and run the computation
 - Copy output files from `$SCRATCH` to `$DATAWORK`
 
 ---
@@ -179,7 +179,7 @@ module purge
 
 ---
 
-# Default settings (2/2)
+# Default settings (1/2)
 
 To change some default behaviours, you need to create/edit the Linux configuration file.
 
@@ -193,7 +193,7 @@ gedit ${HOME}/.cshrc $
 
 ---
 
-# Default settings (1/2)
+# Default settings (2/2)
 
 In the `.cshrc` file, you can define new shortcuts:
 
