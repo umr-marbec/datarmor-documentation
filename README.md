@@ -350,11 +350,12 @@ If you requested more memory/walltime than you used, adapt your needs.
 
 Data exchange between local computer amnd Datarmor should not be done on the compute node, especially so for heavy files (**no use of `scp`**).
 
-To exchange data, use the `datacopy.ifremer.fr` server, to which you can connect using FTP. 
+To exchange data, use the `datacopy.ifremer.fr` server, to which you can connect using FTP. Your **intranet** logins are required.
 
-But you can also use FileZilla.
 
 > **Note:** you need to be on the Ifremer network. If not, the VPN should be on.
+
+Is is advised to use FileZilla to do that
 
 ---
 
