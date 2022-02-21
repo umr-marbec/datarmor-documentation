@@ -238,8 +238,7 @@ To run a sequential, interactive job, type the following:
 qsub -I -l walltime=30:00:00 -l mem=100g
 ```
 
-The `-l mem` specifies the requested memory, 
-`-l walltime` specifies the requested calculation time.
+The `-l mem` specifies the requested memory, `-l walltime` specifies the requested calculation time.
 
 Sequential jobs can be used to move/copy heavy data files (movies, model forcings, model outputs, etc.) from one place to another.
 
