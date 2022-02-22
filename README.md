@@ -310,12 +310,12 @@ So here, the program uses 48 cores in total.
 
 # Datarmor queues
 
-The full description of Datarmor is provided [here](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/Datarmor-Calcul-et-Donnees/Datarmor-calcul-et-programmes/,DanaInfo=w3z.ifremer.fr,SSL+Queues-d-execution-PBS-Configuration-detaillee). The main queues are listed below:
+The full description of Datarmor queues is provided [here](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/Datarmor-Calcul-et-Donnees/Datarmor-calcul-et-programmes/,DanaInfo=w3z.ifremer.fr,SSL+Queues-d-execution-PBS-Configuration-detaillee). Most important ones are:
 - `sequentiel`: the default one (single core)
 - `omp`: shared-memory queue (several nodes with access to the same memory).
 - `mpi_N`: distributed memory queue (several nodes with independent memories), with `N` ranging from 1 (28 cores) to 18 (504 cores)
 - `big`: distributed memory with 1008 cores.
-- `ftp`: queue used to download data from remote FTP servers
+- `ftp`: queue used to upload/download data to/from remote FTP servers
 - `gpuq`: GPU queue.
 
 ---
@@ -347,7 +347,7 @@ If you requested more memory/walltime than you used, adapt your needs.
 
 # Exchange between Datarmor and local computer
 
-Data exchange between local computer amnd Datarmor should not be done on the compute node, especially so for heavy files (**no use of `scp`**).
+Data exchange between local computer and Datarmor should not be done on the compute node, especially so for heavy files (**no use of `scp`**).
 
 To exchange data, use the `datacopy.ifremer.fr` server, to which you can connect using FTP. Your **intranet** logins are required.
 
@@ -462,10 +462,10 @@ For a R environment:
 ```
 conda create --name r-env
 conda activate r-env
-conda install r r-base r-ggplot2
+conda install r r-base
 ```
 
-To remove:
+To remove an environment:
 
 ```
 conda env remove --name r-test
@@ -481,6 +481,8 @@ In order to process data interactively, you can use Jupyter/Jupylab. To do so, c
     <img height=400 src="figs/jupy1.png">
 </div>
 
+> Note: you also need to be on Ifremer Network or with the Datarmor VPN activated
+
 ---
 
 # Using Jupyter
@@ -495,10 +497,20 @@ Now, select the resources that you want (core + memory)
 
 ---
 
+# Using Jupyter
+
+When server is on, click on the `New` button and choose the environment of your choice.
+
+<div align="center">
+    <img height=450 src="figs/jupy3.png">
+</div>
+
+---
+
 
 # Using Jupyter
 
-To use Jupyter with R or Matlab scripts, you will need to install:
+To use Jupyter with R or Matlab scripts, you will need to install the following libraries on your environment:
 
 ```
 conda install r-irkernel  # for R
