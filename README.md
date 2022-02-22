@@ -519,7 +519,7 @@ conda install jupyter-server-proxy \
 To use Jupyter with R scripts, you will need to install:
 
 ```
-conda install r-irkernelr
+conda install r-irkernel
 ```
 
 To use Jupyter with Octave:
