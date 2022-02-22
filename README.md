@@ -506,7 +506,7 @@ conda install jupyter-server-proxy \
               jupyterhub \
               jupyterhub-base \ 
               jupyterlab \ 
-              jupyterlab_pygment \ 
+              jupyterlab_pygments \ 
               jupyterlab_server
 ```
 
