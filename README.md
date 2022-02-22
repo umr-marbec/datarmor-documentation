@@ -485,58 +485,35 @@ In order to process data interactively, you can use Jupyter/Jupylab. To do so, c
 
 # Using Jupyter
 
-Now, select the resources that you want (core + memory) and eventually specify a Conda environment.
+Now, select the resources that you want (core + memory)
 
 <div align="center">
     <img height=400 src="figs/jupy2.png">
 </div>
 
----
-
-# Using Jupyter
-
-To use Jupyter with one of your own conda environment, you will need to install the following Conda packages
-
-```
-conda install jupyter-server-proxy \
-              jupyter_client \ 
-              jupyter_core \ 
-              jupyter_server \ 
-              jupyter_telemetry \ 
-              jupyterhub \
-              jupyterhub-base \ 
-              jupyterlab \ 
-              jupyterlab_pygments \ 
-              jupyterlab_server
-```
-
-> I also suggest the install of `jupytext` to automatically export Notebooks  into script files
+> **Warning: do not specify an optional environment**
 
 ---
 
+
 # Using Jupyter
 
-To use Jupyter with R scripts, you will need to install:
+To use Jupyter with R or Matlab scripts, you will need to install:
 
 ```
-conda install r-irkernel
+conda install r-irkernel  # for R
+conda install matlab_kernel  # for matlab
 ```
 
-To use Jupyter with Octave:
-
-```
-conda install octave_kernel
-```
-
-To use Jupyter with Matlab:
-
-```
-conda install matlab_kernel
-```
-
-To use Jupyter with Julia, run Julia and type:
+To use Jupyter with Julia, run Julia (installed with `conda`) and type:
 
 ```
 using Pkg
 Pkg.add("IJulia")
+```
+
+I also suggest the install of `jupytext` to automatically export Notebooks  into script files:
+
+```
+conda install jupytext
 ```
