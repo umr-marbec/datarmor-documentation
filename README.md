@@ -129,12 +129,6 @@ Important folders are:
 -   `$DATAWORK`: data folder (1 To, **no back-up**).
 -   `$SCRATCH`: temporary folder (10 To, files older than 10 days are automatically removed). Used to run the computation.
 
-In general, computation should follow these steps: 
-- Copy codes from `$HOME` to `$SCRATCH`
-- Copy data from `$DATAWORK` to `$SCRATCH`
-- Go to `$SCRATCH` and run the computation
-- Copy output files from `$SCRATCH` to `$DATAWORK`
-
 ---
 
 # Modules (1/2)
@@ -307,6 +301,29 @@ date
 So here, the program uses 48 cores in total.
 
 ---
+
+# Running a job: good practice
+
+A good practice is to copy everything you need (code + data) to `$SCRATCH`.
+
+```
+#!/bin/csh
+#PBS -l mem=10Mo
+#PBS -q mpi_2
+#PBS -l walltime=00:05:00
+
+source /usr/share/Modules/3.2.10/init/csh
+module load NETCDF/4.3.3.1-mpt-intel2016
+
+cp -r $HOME/code.exe $SCRATCH
+cp -r $DATAWORK/data $SCRATCH
+cd $SCRATCH
+$MPI_LAUNCH code.exe >& out
+cp -r output $DATAWORK
+```
+
+---
+
 
 # Datarmor queues
 
@@ -515,6 +532,7 @@ To use Jupyter with R or Matlab scripts, you will need to install the following 
 ```
 conda install r-irkernel  # for R
 conda install matlab_kernel  # for matlab
+conda install ipykernel
 ```
 
 To use Jupyter with Julia, run Julia (installed with `conda`) and type:
