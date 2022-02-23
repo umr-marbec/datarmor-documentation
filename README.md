@@ -64,7 +64,7 @@ replacing `nbarrier` by your **intranet** login. The `-X` option allows display 
 
 # RSA keys (Linux / Mac Os X)
 
-To connect on Datarmor without typing the password, you need to use a RSA key. First, check if one already exists:
+To connect on Datarmor without typing the password, you need to use a RSA key. First, check if one already exists on your local computer:
 
 ``` {.csh language="csh"}
 ls $HOME/.ssh/id_rsa.pub
@@ -87,7 +87,7 @@ ssh-copy-id nbarrier@datarmor.ifremer.fr
 
 # Connection: Putty (Windows)
 
-For Windows Users, it is recommended to use [Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) 
+For Windows Users, it is recommended to use [Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html): 
 
 <div align="center">
     <img height=500 src="figs/Capture_putty.PNG">
@@ -128,6 +128,7 @@ Important folders are:
 -   `$HOME`: main folder (50 Mo, backed-up). For codes and important things
 -   `$DATAWORK`: data folder (1 To, **no back-up**).
 -   `$SCRATCH`: temporary folder (10 To, files older than 10 days are automatically removed). Used to run the computation.
+- `/dataref`: data containing some reference data (Copernicus data, atmospheric forcings, etc.)
 
 ---
 
@@ -194,7 +195,7 @@ In the `.cshrc` file, you can define new shortcuts:
 ```{.csh language="csh"}
 alias x 'exit'
 alias rm 'rm -i -v'
-alias cp 'cp -i -v -p'
+alias cp 'cp -i -v'
 alias mv 'mv -i -v'
 ```
 
@@ -236,6 +237,10 @@ The `-l mem` specifies the requested memory, `-l walltime` specifies the request
 
 Sequential jobs can be used to move/copy heavy data files (movies, model forcings, model outputs, etc.) from one place to another.
 
+Job is ended by typing `exit` on the terminal.
+
+> **Running interactive jobs imply that you leave your connection open until the job is finished.**
+
 ---
 
 # Running a job: PBS script
@@ -265,7 +270,7 @@ Some examples are provided in Datarmor's `/appli/services/exemples/` folder (see
 source /usr/share/Modules/3.2.10/init/csh
 module load R
 
-# go to the directory where the job has been run
+# go to the directory where the job has been launched
 cd $PBS_O_WORKDIR
 
 cat > script.R <<EOF
@@ -348,7 +353,7 @@ qstat -u nbarrier
 To suppress a job:
 
 ``` {.csh language="csh"}
-qdel JOB_ID 
+qdel 9255575.datarmor0  # replace by the ID of the job to kill
 ```
 
 At the end of the job, check the email you receive and look for the following lines:
@@ -358,7 +363,7 @@ resources_used.mem=12336kb
 resources_used.walltime=00:00:24
 ```
 
-If you requested more memory/walltime than you used, adapt your needs.
+If you requested more memory/walltime than you used, adapt your needs for the next time.
 
 ---
 
@@ -420,7 +425,7 @@ This will make accessible the `conda` commands.
 
 # Conda: settings
 
-Now, create a `.condarc` using `gedit $HOME/.condarc` and write:
+Now, create a `.condarc` using `gedit $HOME/.condarc &` and write:
 
 ```
 envs_dirs:
@@ -434,7 +439,7 @@ channels:
   - defaults
 ```
 
-Replace the first line by a folder of your choice. It will contain your own environments
+Replace the first line by a folder of your choice. It will contain your own environments.
 
 ---
 
@@ -485,14 +490,14 @@ conda install r r-base
 To remove an environment:
 
 ```
-conda env remove --name r-test
+conda env remove --name r-env
 ```
 
 ---
 
 # Using Jupyter
 
-In order to process data interactively, you can use Jupyter/Jupylab. To do so, connect on https://datarmor-jupyterhub.ifremer.fr/ with your Intranet login.
+In order to process data in a fancy way, you can use Jupyter/Jupylab. To do so, connect on https://datarmor-jupyterhub.ifremer.fr/ with your Intranet login.
 
 <div align="center">
     <img height=400 src="figs/jupy1.png">
@@ -516,7 +521,7 @@ Now, select the resources that you want (core + memory)
 
 # Using Jupyter
 
-When server is on, click on the `New` button and choose the environment of your choice.
+When the server is on, click on the `New` button and choose the Conda environment of your choice.
 
 <div align="center">
     <img height=450 src="figs/jupy3.png">
@@ -527,12 +532,12 @@ When server is on, click on the `New` button and choose the environment of your 
 
 # Using Jupyter
 
-To use Jupyter with R or Matlab scripts, you will need to install the following libraries on your environment:
+To use Jupyter with your own R, Python or Matlab environments, you will need to install the following additional libraries to your environment:
 
 ```
 conda install r-irkernel  # for R
+conda install ipykernel  # for Python
 conda install matlab_kernel  # for matlab
-conda install ipykernel
 ```
 
 To use Jupyter with Julia, run Julia (installed with `conda`) and type:
@@ -540,10 +545,4 @@ To use Jupyter with Julia, run Julia (installed with `conda`) and type:
 ```
 using Pkg
 Pkg.add("IJulia")
-```
-
-I also suggest the install of `jupytext` to automatically export Notebooks  into script files:
-
-```
-conda install jupytext
 ```
