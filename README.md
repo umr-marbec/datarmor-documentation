@@ -409,9 +409,7 @@ This will need some adaptation depending on the remote server.
 
 # Conda environments
 
-Sometimes, you might need external tools that are not available. For instance, `ffmpeg` for making movies, `maven` for Java compilation, etc.
-
-One way to use these tools is to use [Conda](https://docs.conda.io/en/latest/) environments, which is possible on Datarmor (cf. [Conda sur Datarmor](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/Datarmor-Calcul-et-Donnees/Datarmor-calcul-et-programmes/Pour-aller-plus-loin/,DanaInfo=w3z.ifremer.fr,SSL+Conda-sur-Datarmor)). 
+Sometimes, you might need external tools that are not available on module. One way to use these tools is to create your own [Conda](https://docs.conda.io/en/latest/) environments, which is possible on Datarmor (cf. [Conda sur Datarmor](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/Datarmor-Calcul-et-Donnees/Datarmor-calcul-et-programmes/Pour-aller-plus-loin/,DanaInfo=w3z.ifremer.fr,SSL+Conda-sur-Datarmor)). 
 
 First, edit your `.cshrc` file (using `gedit $HOME/.cshrc &`) and add:
 
@@ -419,7 +417,13 @@ First, edit your `.cshrc` file (using `gedit $HOME/.cshrc &`) and add:
 source /appli/anaconda/latest/etc/profile.d/conda.csh
 ```
 
-This will make accessible the `conda` commands.
+Then, close and reopen the datarmor connection and type
+
+```
+which conda
+```
+
+to see if `conda` commands are accessible.
 
 ---
 
@@ -495,9 +499,31 @@ conda env remove --name r-env
 
 ---
 
+# Conda: Running Jobs
+
+Conda can be used to run PBS jobs as follows:
+
+```
+#!/bin/csh
+#PBS -l mem=4g
+#PBS -l walltime=00:10:00
+
+# for CSH
+source /appli/anaconda/latest/etc/profile.d/conda.csh
+
+# for BASH
+#. /appli/anaconda/latest/etc/profile.d/conda.csh
+
+conda activate myconda
+
+python toto.py >& output
+```
+
+---
+
 # Using Jupyter
 
-In order to process data in a fancy way, you can use Jupyter/Jupylab. To do so, connect on https://datarmor-jupyterhub.ifremer.fr/ with your Intranet login.
+In order to process data in a fancy way, you can use [Jupyter](https://jupyter.org/). To do so, connect on https://datarmor-jupyterhub.ifremer.fr/ with your Intranet login.
 
 <div align="center">
     <img height=400 src="figs/jupy1.png">
@@ -530,7 +556,7 @@ When the server is on, click on the `New` button and choose the Conda environmen
 ---
 
 
-# Using Jupyter
+# Using Jupyter: personal environments
 
 To use Jupyter with your own R, Python or Matlab environments, you will need to install the following additional libraries to your environment:
 
@@ -540,7 +566,7 @@ conda install ipykernel  # for Python
 conda install matlab_kernel  # for matlab
 ```
 
-To use Jupyter with Julia, run Julia (installed with `conda`) and type:
+To use Jupyter with Julia, run Julia (installed with `conda`) from your environment and type:
 
 ```
 using Pkg
