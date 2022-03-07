@@ -341,7 +341,7 @@ module load NETCDF/4.3.3.1-mpt-intel2016
 $MPI_LAUNCH program.exe >& out
 ```
 
-In the above, 2 nodes, each containing 28 cores are requested, so 56 cores un total
+In the above, 2 nodes, each containing 28 cores are requested, so 56 cores in total
 
 ---
 
