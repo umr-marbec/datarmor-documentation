@@ -17,13 +17,40 @@ Datarmor is a High-Performance Computer (HPC):
 - CPU : 11088 cores (My PC: 12 cores)
 - RAM: 128 Go (My PC: 32 Go)
 - Storage: 5 Po = 5000 To (My PC: 1 To).
-- Hosting of web services (Jupyter Notebooks, visualuzation nodes)
 
 Source: [Ifremer](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/,DanaInfo=w3z.ifremer.fr,SSL+Qu-est-ce-que-Datarmor)
 
 ---
 
-# Pulse Secure: install
+# What is Datarmor?
+
+<div align="center">
+    <img src="figs/DATARMOR.jpg" width="75%">
+</div>
+
+---
+
+# Applications
+
+- Parallel computing (MPI, Fortran, C/C++)
+- Data Analysis (Python, R, Matlab, Julia)
+- JupyterHub (Notebooks, Jupyterlab)
+- Machine Learning (TensorFlow)
+- Data visualisation (VisIt, VMD)
+
+---
+
+# Creating an account
+
+To create an account, send me an email (nicolas.barrier@ird.fr) with:
+- An **institutional** email address
+- A phone number
+- The names of your supervisors (if any)
+- A short description of why you want to use Datarmor (projects, tools, etc.) 
+
+---
+
+# Connection: Pulse Secure
 
 Outside the Ifremer Network, PulseSecure is required. It can be downloaded [here](https://domicile.ifremer.fr/index.php/s/WC9GArY8Eo51yZE/,DanaInfo=cloud.ifremer.fr,SSL+download?path=\%2F&files). 
 
@@ -36,7 +63,7 @@ Install the right version depending on your OS:
 
 ---
 
-# Pulse Secure: set-up
+# Connection: Pulse Secure
 
 Now set-up a new connection as follows:
 
@@ -62,29 +89,6 @@ replacing `nbarrier` by your **intranet** login. The `-X` option allows display 
 
 ---
 
-# RSA keys (Linux / Mac Os X)
-
-To connect on Datarmor without typing the password, you need to use a RSA key. First, check if one already exists on your local computer:
-
-``` {.csh language="csh"}
-ls $HOME/.ssh/id_rsa.pub
-```
-
-If no such file, generate a key using
-
-``` {.csh language="csh"}
-ssh-keygen  
-```
-
-and follows instructions. Then, send it to Datarmor:
-
-```
-ssh-copy-id nbarrier@datarmor.ifremer.fr
-```
-
----
-
-
 # Connection: Putty (Windows)
 
 For Windows Users, it is recommended to use [Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html): 
@@ -105,14 +109,41 @@ To allow display, you need to enable X11 forwarding on the `Connection > SSH` me
 
 ---
 
+# RSA keys (Linux / Mac Os X)
+
+To connect on Datarmor without typing the password, you need to use a RSA key. First, check if one already exists on your local computer:
+
+``` {.csh language="csh"}
+ls $HOME/.ssh/id_rsa.pub
+```
+
+If no such file, generate a key using
+
+``` {.csh language="csh"}
+ssh-keygen  
+```
+
+and follows instructions. Then, send it to Datarmor (the intranet password is needed):
+
+```
+ssh-copy-id nbarrier@datarmor.ifremer.fr
+```
+
+Now you should be able to connect to Datarmor without typing your password.
+
+---
+
 # Navigating on Datarmor
 
 Datarmor is a Unix computer. You need some Linux background.
 
 - Change directory: `cd my/new/directory`
+- List directory content: `ls`
 - Go to parent directory: `cd ..`
 - Create new folder: `mkdir -p folder_name`
+- Create an empty file: `touch file.txt`
 - Copy a file: `cp file.txt save_file.txt`
+- Remove a file: `rm -r file.txt`
 - Rename/Move a file: `mv file.text my/dest/renamed.txt`
 
 Visit [linux-commands-cheat-sheet](https://linoxide.com/linux-commands-cheat-sheet/) for a summary of essentials Linux commands.
