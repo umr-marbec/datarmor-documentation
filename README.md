@@ -5,9 +5,18 @@ theme: theme-den
 paginate: true
 ---
 
+
+
 # Datarmor Training
 
-## Nicolas Barrier ([nicolas.barrier@ird.fr](mailto:nicolas.barrier@ird.fr))
+### Nicolas Barrier ([nicolas.barrier@ird.fr](mailto:nicolas.barrier@ird.fr))
+
+<br>
+
+<div align="center">
+    <img src="https://avatars.githubusercontent.com/u/49284398?s=400&u=3afdf123b3bee4951f75af5a11a504b6e1b91934&v=4" width="20%">
+</div>
+<br>
 
 ---
 
@@ -180,9 +189,9 @@ module load vacumm/3.4.0-intel  # load a specific version
 
 To list all the available modules:
 
-`
+```
 module avail
-`
+```
 
 
 ---
