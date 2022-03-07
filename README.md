@@ -519,16 +519,16 @@ To recover data from a remote FTP server, submit a job on the `ftp` queue. An ex
 
 cd $DATAWORK
 
-time rsync -av login@server:/source/folder /destination/folder/  >& output
+time rsync -av login@server:/source/folder /destination/folder/ >& output
 ```
 
 This will need some adaptation depending on the remote server.
 
 ---
 
-# Conda environments
+# Conda
 
-Sometimes, you might need external tools that are not available on modulse. One way to use these tools is to create your own [Conda](https://docs.conda.io/en/latest/) environments, which is possible on Datarmor (cf. [Conda sur Datarmor](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/Datarmor-Calcul-et-Donnees/Datarmor-calcul-et-programmes/Pour-aller-plus-loin/,DanaInfo=w3z.ifremer.fr,SSL+Conda-sur-Datarmor)). 
+Sometimes, you might need external tools that are not available on modules. One way to use these tools is to create your own [Conda](https://docs.conda.io/en/latest/) environments, which is possible on Datarmor (cf. [Conda sur Datarmor](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/Datarmor-Calcul-et-Donnees/Datarmor-calcul-et-programmes/Pour-aller-plus-loin/,DanaInfo=w3z.ifremer.fr,SSL+Conda-sur-Datarmor)). 
 
 First, edit your `.cshrc` file (using `gedit $HOME/.cshrc &`) and add:
 
@@ -640,7 +640,7 @@ python toto.py >& output
 
 ---
 
-# Using Jupyter
+# Jupyterhub
 
 In order to process data in a fancy way, you can use [Jupyter](https://jupyter.org/). To do so, connect on https://datarmor-jupyterhub.ifremer.fr/ with your Intranet login.
 
@@ -652,7 +652,7 @@ In order to process data in a fancy way, you can use [Jupyter](https://jupyter.o
 
 ---
 
-# Using Jupyter
+# Jupyterhub
 
 Now, select the resources that you want (core + memory)
 
@@ -664,7 +664,7 @@ Now, select the resources that you want (core + memory)
 
 ---
 
-# Using Jupyter
+# Jupyterhub
 
 When the server is on, click on the `New` button and choose the Conda environment of your choice.
 
@@ -675,7 +675,7 @@ When the server is on, click on the `New` button and choose the Conda environmen
 ---
 
 
-# Using Jupyter: personal environments
+# Jupyterhub: personal environments
 
 To use Jupyter with your own R, Python or Matlab environments, you will need to install the following additional libraries to your environment:
 
