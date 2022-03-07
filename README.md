@@ -152,14 +152,17 @@ Visit [linux-commands-cheat-sheet](https://linoxide.com/linux-commands-cheat-she
 ---
 
 
-# Important folders
+# Datarmor: important folders
 
 Important folders are:
 
 -   `$HOME`: main folder (50 Mo, backed-up). For codes and important things
--   `$DATAWORK`: data folder (1 To, **no back-up**).
--   `$SCRATCH`: temporary folder (10 To, files older than 10 days are automatically removed). Used to run the computation.
-- `/dataref`: data containing some reference data (Copernicus data, atmospheric forcings, etc.)
+-   `$DATAWORK`: data folder (1 To, **no back-up**). For data.
+-   `$SCRATCH`: temporary folder (10 To, files older than 10 days are automatically removed). For running computation.
+- `/dataref`: folder containing some reference data (Copernicus data, atmospheric forcings, etc.)
+- `/home/datawork-marbec-pmod`: Marbec DEN folder (limited access)
+
+> To recover deleted files from `$HOME`, send an email to assistance@ifremer.fr
 
 ---
 
@@ -179,17 +182,16 @@ To list all the available modules:
 module avail
 ```
 
-To list the modules that you use:
-
-``` {.csh language="csh"}
-module list
-```
-
 
 ---
 
 # Modules (2/2)
 
+To list the modules that are loaded:
+
+``` {.csh language="csh"}
+module list
+```
 
 To deactivate a module:
 
@@ -207,7 +209,7 @@ module purge
 
 # Default settings (1/2)
 
-To change some default behaviours, you need to create/edit the Linux configuration file.
+To change some default behaviours, you need to create/edit a Linux configuration file.
 
 This can be done as follows:
 
@@ -248,9 +250,9 @@ module load NETCDF
 
 # Running a calculation
 
-When you connect on Datarmor, you are on the **login node**.  It is used to navigate, manipulate small files, eventually compile the codes.
+When you connect on Datarmor, you are on the **login node**.  It is used for navigation, small file manipulation, text edition, code compilation **but no more**!
 
-**But absolutely no computation or heavy file manipulation should be done from here!!!**
+**Absolutely no computation or heavy file manipulation should be done from here!!!**
 
 To switch to a compute node, you need to create a PBS job using the `qsub` command.
 
@@ -258,15 +260,15 @@ To switch to a compute node, you need to create a PBS job using the `qsub` comma
 
 # Running a job: interactive mode.
 
-To run a sequential, interactive job, type the following:
+To run an interactive job, type the following command line
 
 ``` {.csh language="csh"}
-qsub -I -l walltime=30:00:00 -l mem=100g
+qsub -I -l walltime=01:00:00 -l mem=50M
 ```
 
 The `-l mem` specifies the requested memory, `-l walltime` specifies the requested calculation time.
 
-Sequential jobs can be used to move/copy heavy data files (movies, model forcings, model outputs, etc.) from one place to another.
+Interactive jobs are used to move/copy heavy data files (movies, model forcings, model outputs, etc.) from one place to another.
 
 Job is ended by typing `exit` on the terminal.
 
@@ -294,8 +296,8 @@ Some examples are provided in Datarmor's `/appli/services/exemples/` folder (see
 
 ``` {.csh language="csh"}
 #!/bin/csh
-#PBS -l mem=10Mo
-#PBS -l walltime=00:00:05
+#PBS -l mem=100M
+#PBS -l walltime=01:00:00
 
 # Load the modules that will be used to do the job
 source /usr/share/Modules/3.2.10/init/csh
@@ -321,17 +323,15 @@ Parallel jobs are run in the same way, except that a queue (`-q`) parameter is a
 
 ``` {.bash language="csh"}
 #!/bin/csh
-#PBS -l mem=10Mo
+#PBS -l mem=100M
 #PBS -q mpi_2
-#PBS -l walltime=00:05:00
+#PBS -l walltime=01:00:00
 cd $PBS_O_WORKDIR
 
 source /usr/share/Modules/3.2.10/init/csh
 module load NETCDF/4.3.3.1-mpt-intel2016
 
-date
-time $MPI_LAUNCH program.exe >& out
-date
+$MPI_LAUNCH program.exe >& out
 ```
 
 So here, the program uses 48 cores in total.
@@ -344,9 +344,9 @@ A good practice is to copy everything you need (code + data) to `$SCRATCH`.
 
 ```
 #!/bin/csh
-#PBS -l mem=10Mo
+#PBS -l mem=100M
 #PBS -q mpi_2
-#PBS -l walltime=00:05:00
+#PBS -l walltime=01:00:00
 
 source /usr/share/Modules/3.2.10/init/csh
 module load NETCDF/4.3.3.1-mpt-intel2016
@@ -357,6 +357,55 @@ cd $SCRATCH
 $MPI_LAUNCH code.exe >& out
 cp -r output $DATAWORK
 ```
+
+---
+
+# Running a job: array
+
+To repeat a job a certain number of times (if your model has stochasticity for instance), you can use job array:
+
+```
+#!/bin/csh
+#PBS -l mem=10M
+#PBS -l walltime=00:01:00
+
+cd $PBS_O_WORKDIR
+
+mkdir -p output_${PBS_ARRAY_INDEX}
+touch output_${PBS_ARRAY_INDEX}/toto.txt
+```
+
+To run the job:
+
+```
+qsub -J 0-10 seq.array
+```
+
+It will run the job with `PBS_ARRAY_INDEX` ranging from `0` to `10`.
+
+---
+
+# Running a job: chained jobs
+
+First, run a job using the `-h` option (freeze the job):
+
+```
+qsub -h -N Job1 script1.pbs
+```
+
+Now, run a second job depending on the result of the first job:
+
+```
+qsub -N Job2 -W depend=afterany:'qselect -N Job1 -u $USER' script2.pbs
+```
+
+Finally, release the first job:
+
+```
+qrls 'qselect -N Job1 -u $USER'
+```
+
+> Note: replace `afterany` by `afterok` (no error) or `afternotok` (error)
 
 ---
 
@@ -381,6 +430,48 @@ To follow the status of your job:
 qstat -u nbarrier
 ```
 
+<table class="center">
+<tr>
+<td><b>C</b></td>
+<td>Job is completed after having run.</td>
+</tr>
+<tr>
+<td><b>E</b></td>
+<td>Job is exiting after having run.</td>
+</tr>
+<tr>
+<td><b>H</b></td> 
+<td>Job is held.</td>
+</tr>
+<tr>
+<td><b>Q</b></td> 
+<td>Job is queued, eligible to run or routed.</td>
+</tr>
+<tr>
+<td><b>R</b></td> 
+<td>Job is running.</td>
+</tr>
+<!-- 
+<tr>
+<td>T</td> 
+<td>Job is being moved to new location.</td>
+</tr>
+-->
+<tr>
+<td><b>W</b></td> 
+<td>Job is waiting for its execution time (-a option) to be reached.</td>
+</tr>
+<!-- 
+<tr>
+<td>S</td> 
+<td>(Unicos only) Job is suspended.</td>
+-->
+</table>
+
+---
+
+# Following your jobs
+
 To suppress a job:
 
 ``` {.csh language="csh"}
@@ -394,9 +485,10 @@ resources_used.mem=12336kb
 resources_used.walltime=00:00:24
 ```
 
-If you requested more memory/walltime than you used, adapt your needs for the next time.
+If you requested more memory/walltime than you used, adapt your needs for the next time (cf. [here](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/Datarmor-Calcul-et-Donnees/Datarmor-calcul-et-programmes/,DanaInfo=w3z.ifremer.fr,SSL+Placer-dimensionner-et-surveiller-ses-jobs-PBS#exemple) for more details)
 
 ---
+
 
 # Exchange between Datarmor and local computer
 
@@ -430,7 +522,6 @@ To recover data from a remote FTP server, submit a job on the `ftp` queue. An ex
 
 cd $DATAWORK
 
-time lftp ...
 time rsync -av login@server:/source/folder /destination/folder/  >& output
 ```
 
@@ -440,7 +531,7 @@ This will need some adaptation depending on the remote server.
 
 # Conda environments
 
-Sometimes, you might need external tools that are not available on module. One way to use these tools is to create your own [Conda](https://docs.conda.io/en/latest/) environments, which is possible on Datarmor (cf. [Conda sur Datarmor](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/Datarmor-Calcul-et-Donnees/Datarmor-calcul-et-programmes/Pour-aller-plus-loin/,DanaInfo=w3z.ifremer.fr,SSL+Conda-sur-Datarmor)). 
+Sometimes, you might need external tools that are not available on modulse. One way to use these tools is to create your own [Conda](https://docs.conda.io/en/latest/) environments, which is possible on Datarmor (cf. [Conda sur Datarmor](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/Datarmor-Calcul-et-Donnees/Datarmor-calcul-et-programmes/Pour-aller-plus-loin/,DanaInfo=w3z.ifremer.fr,SSL+Conda-sur-Datarmor)). 
 
 First, edit your `.cshrc` file (using `gedit $HOME/.cshrc &`) and add:
 
