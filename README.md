@@ -115,13 +115,13 @@ To allow display, you need to enable X11 forwarding on the `Connection > SSH` me
 
 To connect on Datarmor without typing the password, you need to use a RSA key. First, check if one already exists on your local computer:
 
-``` {.csh language="csh"}
+```
 ls $HOME/.ssh/id_rsa.pub
 ```
 
 If no such file, generate a key using
 
-``` {.csh language="csh"}
+```
 ssh-keygen  
 ```
 
@@ -172,7 +172,7 @@ Important folders are:
 
 To work with external tools, you need to load them into Datarmor's memory. This is done as follows:
 
-``` {.csh language="csh"}
+```
 module load R   # load one module
 module load java NETCDF  #  load 2 modules
 module load vacumm/3.4.0-intel  # load a specific version
@@ -180,9 +180,9 @@ module load vacumm/3.4.0-intel  # load a specific version
 
 To list all the available modules:
 
-``` {.csh language="csh"}
+`
 module avail
-```
+`
 
 
 ---
@@ -191,19 +191,19 @@ module avail
 
 To list the modules that are loaded:
 
-``` {.csh language="csh"}
+```
 module list
 ```
 
 To unload a module:
 
-``` {.csh language="csh"}
+```
 module unload R
 ```
 
 To unload all the modules at once:
 
-``` {.csh language="csh"}
+```
 module purge
 ```
 
@@ -262,7 +262,7 @@ Heavy stuff should be done on a compute node, which are accessible by submitting
 
 To run an interactive job, type the following command line
 
-``` {.csh language="csh"}
+```
 qsub -I -l walltime=01:00:00 -l mem=50M
 ```
 
@@ -280,7 +280,7 @@ To run a job in a non-interactive way, you need to create a `.pbs` file, which c
 
 When done, run the calculation as follows:
 
-``` {.csh language="csh"}
+```
 qsub run_script.pbs
 ```
 
@@ -292,7 +292,7 @@ Some examples are provided in Datarmor's `/appli/services/exemples/` folder (see
 
 # Running a job: PBS script (sequential)
 
-``` {.csh language="csh"}
+```
 #!/bin/csh
 #PBS -l mem=100M
 #PBS -l walltime=01:00:00
@@ -423,7 +423,7 @@ qrls 'qselect -N Job1 -u $USER'
 
 To follow the status of your job:
 
-``` {.csh language="csh"}
+```
 qstat -u nbarrier
 ```
 
@@ -453,12 +453,10 @@ qstat -u nbarrier
 <td>T</td> 
 <td>Job is being moved to new location.</td>
 </tr>
--->
 <tr>
 <td><b>W</b></td> 
 <td>Job is waiting for its execution time (-a option) to be reached.</td>
 </tr>
-<!-- 
 <tr>
 <td>S</td> 
 <td>(Unicos only) Job is suspended.</td>
@@ -471,7 +469,7 @@ qstat -u nbarrier
 
 To suppress a job:
 
-``` {.csh language="csh"}
+```
 qdel 9255575.datarmor0  # replace by the ID of the job to kill
 ```
 
