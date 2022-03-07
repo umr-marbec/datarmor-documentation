@@ -48,6 +48,8 @@ To create an account, send me an email (nicolas.barrier@ird.fr) with:
 - The names of your supervisors (if any)
 - A short description of why you want to use Datarmor (projects, tools, etc.) 
 
+Support questions about Datarmor should be sent to assistance@ifremer.fr
+
 ---
 
 # Connection: Pulse Secure
@@ -71,7 +73,7 @@ Now set-up a new connection as follows:
     <img src="figs/screenshot_pulse_secure.png">
 </div>
 
-Connect to the Datarmor VPN using your **extranet** logins.
+Connect to the Datarmor VPN using your **extranet** logins and leave it open until you have finished.
 
 ---
 # Connection: Terminal (Linux / Mac Os X)
@@ -143,7 +145,7 @@ Datarmor is a Unix computer. You need some Linux background.
 - Create new folder: `mkdir -p folder_name`
 - Create an empty file: `touch file.txt`
 - Copy a file: `cp file.txt save_file.txt`
-- Remove a file: `rm -r file.txt`
+- Remove a file/folder: `rm -r file.txt`
 - Rename/Move a file: `mv file.text my/dest/renamed.txt`
 
 Visit [linux-commands-cheat-sheet](https://linoxide.com/linux-commands-cheat-sheet/) for a summary of essentials Linux commands.
@@ -193,7 +195,7 @@ To list the modules that are loaded:
 module list
 ```
 
-To deactivate a module:
+To unload a module:
 
 ``` {.csh language="csh"}
 module unload R
@@ -209,9 +211,9 @@ module purge
 
 # Default settings (1/2)
 
-To change some default behaviours, you need to create/edit a Linux configuration file.
+**By default, the `rm` command does not ask you whether you are sure or not. Might be error prone. We might want to correct it.**
 
-This can be done as follows:
+To change some default behaviours, you need to create/edit a Linux configuration file.
 
 ```
 gedit ${HOME}/.cshrc &
@@ -223,7 +225,7 @@ gedit ${HOME}/.cshrc &
 
 # Default settings (2/2)
 
-In the `.cshrc` file, you can define new shortcuts:
+In the `.cshrc` file, you can overwrite existing commands and create new ones:
 
 ```{.csh language="csh"}
 alias x 'exit'
@@ -232,29 +234,27 @@ alias cp 'cp -i -v'
 alias mv 'mv -i -v'
 ```
 
-You can also create environment variables:
+You can also create environment variables (accessible via `$`):
 
 ```{.csh language="csh"}
 setenv R_LIBS_USER $HOME/libs/R/lib
 ```
 
-Now, you can access the above folder using `cd $R_LIBS_USER`
-
-You can also load your favorite modules in here:
+You can also load your favorite modules:
 
 ```
-module load NETCDF
+module load R
 ```
 
 ---
 
-# Running a calculation
+# Running a calculation: warning!
 
-When you connect on Datarmor, you are on the **login node**.  It is used for navigation, small file manipulation, text edition, code compilation **but no more**!
+When you connect on Datarmor, you end-up on the **login node**.  It is used for navigation, small file manipulation, text edition, code compilation **but nothing more!**
 
 **Absolutely no computation or heavy file manipulation should be done from here!!!**
 
-To switch to a compute node, you need to create a PBS job using the `qsub` command.
+Heavy stuff should be done on a compute node, which are accessible by submitting a PBS job using the `qsub` command.
 
 ---
 
@@ -267,8 +267,6 @@ qsub -I -l walltime=01:00:00 -l mem=50M
 ```
 
 The `-l mem` specifies the requested memory, `-l walltime` specifies the requested calculation time.
-
-Interactive jobs are used to move/copy heavy data files (movies, model forcings, model outputs, etc.) from one place to another.
 
 Job is ended by typing `exit` on the terminal.
 
@@ -319,7 +317,7 @@ Rscript script.R >& output.log  # redirects outputs into log
 
 # Running a job: PBS script (parallel)
 
-Parallel jobs are run in the same way, except that a queue (`-q`) parameter is added. It specifies the number of **nodes** that you use. 1 node is 28 cores.
+Parallel jobs are run in the same way, except that a queue (`-q`) parameter is added. It specifies the resources that you will use.
 
 ``` {.bash language="csh"}
 #!/bin/csh
@@ -334,13 +332,25 @@ module load NETCDF/4.3.3.1-mpt-intel2016
 $MPI_LAUNCH program.exe >& out
 ```
 
-So here, the program uses 48 cores in total.
+In the above, 2 nodes, each containing 28 cores are requested, so 56 cores un total
+
+---
+
+# Running a job: queues
+
+The full description of Datarmor queues is provided [here](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/Datarmor-Calcul-et-Donnees/Datarmor-calcul-et-programmes/,DanaInfo=w3z.ifremer.fr,SSL+Queues-d-execution-PBS-Configuration-detaillee). Most important ones are:
+- `sequentiel`: the default one (single core)
+- `omp`: shared-memory queue (several nodes with access to the same memory).
+- `mpi_N`: distributed memory queue (several nodes with independent memories), with `N` ranging from 1 (28 cores) to 18 (504 cores)
+- `big`: distributed memory with 1008 cores.
+- `ftp`: queue used to upload/download data to/from remote FTP servers
+- `gpuq`: GPU queue.
 
 ---
 
 # Running a job: good practice
 
-A good practice is to copy everything you need (code + data) to `$SCRATCH`.
+A good practice is to copy everything you need (code + data) to `$SCRATCH` and run your calculation from here:
 
 ```
 #!/bin/csh
@@ -362,7 +372,7 @@ cp -r output $DATAWORK
 
 # Running a job: array
 
-To repeat a job a certain number of times (if your model has stochasticity for instance), you can use job array:
+To repeat a job a certain number of times (if your model has stochasticity for instance), you can use job arrays:
 
 ```
 #!/bin/csh
@@ -387,7 +397,7 @@ It will run the job with `PBS_ARRAY_INDEX` ranging from `0` to `10`.
 
 # Running a job: chained jobs
 
-First, run a job using the `-h` option (freeze the job):
+To run a job in a chained mode (i.e.`job2` depends on `job1`), first run a job using the `-h` option (freeze the job):
 
 ```
 qsub -h -N Job1 script1.pbs
@@ -409,20 +419,7 @@ qrls 'qselect -N Job1 -u $USER'
 
 ---
 
-
-# Datarmor queues
-
-The full description of Datarmor queues is provided [here](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/Datarmor-Calcul-et-Donnees/Datarmor-calcul-et-programmes/,DanaInfo=w3z.ifremer.fr,SSL+Queues-d-execution-PBS-Configuration-detaillee). Most important ones are:
-- `sequentiel`: the default one (single core)
-- `omp`: shared-memory queue (several nodes with access to the same memory).
-- `mpi_N`: distributed memory queue (several nodes with independent memories), with `N` ranging from 1 (28 cores) to 18 (504 cores)
-- `big`: distributed memory with 1008 cores.
-- `ftp`: queue used to upload/download data to/from remote FTP servers
-- `gpuq`: GPU queue.
-
----
-
-# Following your jobs
+# Running a job: follow-up
 
 To follow the status of your job:
 
@@ -470,7 +467,7 @@ qstat -u nbarrier
 
 ---
 
-# Following your jobs
+# Running a job: follow-up
 
 To suppress a job:
 
