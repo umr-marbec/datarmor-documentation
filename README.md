@@ -225,7 +225,7 @@ module purge
 To change some default behaviours, you need to create/edit a Linux configuration file.
 
 ```
-gedit ${HOME}/.cshrc &
+gedit ${HOME}/.csh_aliases &
 ```
 
 > The `&` character implies that you will keep access to your terminal. Else, the terminal will be back once the text editor is closed.
