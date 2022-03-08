@@ -698,3 +698,11 @@ To use Jupyter with Julia, run Julia (installed with `conda`) from your environm
 using Pkg
 Pkg.add("IJulia")
 ```
+
+---
+
+# Datarmor acknowledgements
+
+To acknowledge Datarmor on your publications, add the following lines to your paper:
+
+*The authors acknowledge the Pôle de Calcul et de Données Marines (PCDM, http://www.ifremer.fr/pcdm) for providing DATARMOR storage, data access, computational resources, visualization and support services.*
