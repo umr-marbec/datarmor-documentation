@@ -93,7 +93,7 @@ For Linux/Mac Os X users, open a Terminal and types:
 ssh -X nbarrier@datarmor.ifremer.fr
 ```
 
-replacing `nbarrier` by your **intranet** login. The `-X` option allows display (for use of text editors for instance).
+replacing `nbarrier` by your **intranet** login. The `-X` option allows display (for use of text editors for instance). If the `-X` option does not work, use `-Y`.
 
 
 > For Mac Os X users, I recommend to install and use [iTerm2](https://iterm2.com/) Terminal application, which is more user friendly than the default one.
