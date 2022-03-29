@@ -167,7 +167,7 @@ Visit [linux-commands-cheat-sheet](https://linoxide.com/linux-commands-cheat-she
 
 Important folders are:
 
--   `$HOME`: main folder (50 Mo, backed-up). For codes and important things
+-   `$HOME`: main folder (50 Go, backed-up). For codes and important things
 -   `$DATAWORK`: data folder (1 To, **no back-up**). For data.
 -   `$SCRATCH`: temporary folder (10 To, files older than 10 days are automatically removed). For running computation.
 - `/dataref`: folder containing some reference data (Copernicus data, atmospheric forcings, etc.)
