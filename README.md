@@ -149,6 +149,7 @@ Now you should be able to connect to Datarmor without typing your password.
 Datarmor is a Unix computer. You need some Linux background.
 
 - Change directory: `cd my/new/directory`
+- Find current directory: `pwd`
 - List directory content: `ls`
 - Go to parent directory: `cd ..`
 - Create new folder: `mkdir -p folder_name`
