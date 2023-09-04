@@ -2,14 +2,7 @@
 
 ### Nicolas Barrier ([nicolas.barrier@ird.fr](mailto:nicolas.barrier@ird.fr))
 
-<br>
-
-<div align="center">
-    <img src="https://avatars.githubusercontent.com/u/49284398?s=400&u=3afdf123b3bee4951f75af5a11a504b6e1b91934&v=4" width="20%">
-</div>
-<br>
-
----
+![](figs/marbec-git.png){fig-align="center" width=100}
 
 # What is Datarmor?
 
@@ -20,15 +13,10 @@ Datarmor is a High-Performance Computer (HPC):
 
 Source: [Ifremer](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/,DanaInfo=w3z.ifremer.fr,SSL+Qu-est-ce-que-Datarmor)
 
----
 
 # What is Datarmor?
 
-<div align="center">
-    <img src="figs/DATARMOR.jpg" width="75%">
-</div>
-
----
+![Datarmor](figs/DATARMOR.jpg)
 
 # Applications
 
@@ -38,7 +26,7 @@ Source: [Ifremer](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-do
 - Machine Learning (TensorFlow)
 - Data visualisation (VisIt, VMD)
 
----
+
 
 # Creating an account
 
@@ -50,7 +38,7 @@ To create an account, send me an email (nicolas.barrier@ird.fr) with:
 
 Support questions about Datarmor should be sent to assistance@ifremer.fr
 
----
+
 
 # Connection: Pulse Secure
 
@@ -63,19 +51,17 @@ Install the right version depending on your OS:
 - Ubuntu 20.04: `pulsesecure_9.1.R12_amd64.deb`
 - Ubuntu 18.04: `pulse-9.1R8.x86_64.deb`
 
----
+
 
 # Connection: Pulse Secure
 
 Now set-up a new connection as follows:
 
-<div align="center">
-    <img src="figs/screenshot_pulse_secure.png">
-</div>
+![](figs/screenshot_pulse_secure.png)
 
 Connect to the Datarmor VPN using your **extranet** logins and leave it open until you have finished.
 
----
+
 # Connection: Terminal (Linux / Mac Os X)
 
 For Linux/Mac Os X users, open a Terminal and types:
@@ -89,27 +75,19 @@ replacing `nbarrier` by your **intranet** login. The `-X` option allows display 
 
 > For Mac Os X users, I recommend to install and use [iTerm2](https://iterm2.com/) Terminal application, which is more user friendly than the default one.
 
----
+
 
 # Connection: Putty (Windows)
 
 For Windows Users, it is recommended to use [Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html):
 
-<div align="center">
-    <img height=500 src="figs/Capture_putty.PNG">
-</div>
-
----
+![Capture_PUTTY](figs/Capture_putty.PNG)
 
 # Connection: Putty (Windows)
 
 To allow display, you need to enable X11 forwarding on the `Connection > SSH` menu:
 
-<div align="center">
-    <img height=500 src="figs/putty_config1.webp">
-</div>
-
----
+![putty_config1](figs/putty_config1.png)
 
 # RSA keys (Linux / Mac Os X)
 
@@ -133,7 +111,7 @@ ssh-copy-id nbarrier@datarmor.ifremer.fr
 
 Now you should be able to connect to Datarmor without typing your password.
 
----
+
 
 # Navigating on Datarmor
 
@@ -152,7 +130,7 @@ Datarmor is a Unix computer. You need some Linux background.
 Visit [linux-commands-cheat-sheet](https://linoxide.com/linux-commands-cheat-sheet/) for a summary of essentials Linux commands.
 
 
----
+
 
 
 # Datarmor: important folders
@@ -167,7 +145,7 @@ Important folders are:
 
 > To recover deleted files from `$HOME`, send an email to assistance@ifremer.fr
 
----
+
 
 # Modules (1/2)
 
@@ -186,7 +164,7 @@ module avail
 ```
 
 
----
+
 
 # Modules (2/2)
 
@@ -208,7 +186,7 @@ To unload all the modules at once:
 module purge
 ```
 
----
+
 
 # Default settings (1/2)
 
@@ -222,7 +200,7 @@ gedit ${HOME}/.cshrc &
 
 > The `&` character implies that you will keep access to your terminal. Else, the terminal will be back once the text editor is closed.
 
----
+
 
 # Default settings (2/2)
 
@@ -247,7 +225,7 @@ You can also load your favorite modules:
 module load R
 ```
 
----
+
 
 # Running a calculation: warning!
 
@@ -257,7 +235,7 @@ When you connect on Datarmor, you end-up on the **login node**.  It is used for 
 
 Heavy stuff should be done on a compute node, which are accessible by submitting a PBS job using the `qsub` command.
 
----
+
 
 # Running a job: interactive mode.
 
@@ -273,7 +251,7 @@ Job is ended by typing `exit` on the terminal.
 
 > **Running interactive jobs imply that you leave your connection open until the job is finished.**
 
----
+
 
 # Running a job: PBS script
 
@@ -289,7 +267,7 @@ Job output files will be provided in a `run_script.pbs.oXXXX` file, with `XXXX` 
 
 Some examples are provided in Datarmor's `/appli/services/exemples/` folder (see the `R` and `pbs` sub-folders).
 
----
+
 
 # Running a job: PBS script (sequential)
 
@@ -314,7 +292,7 @@ EOF
 Rscript script.R >& output.log  # redirects outputs into log
 ```
 
----
+
 
 # Running a job: PBS script (parallel)
 
@@ -335,7 +313,7 @@ $MPI_LAUNCH program.exe >& out
 
 In the above, 2 nodes, each containing 28 cores are requested, so 56 cores in total
 
----
+
 
 # Running a job: queues
 
@@ -347,7 +325,7 @@ The full description of Datarmor queues is provided [here](https://domicile.ifre
 - `ftp`: queue used to upload/download data to/from remote FTP servers
 - `gpuq`: GPU queue.
 
----
+
 
 # Running a job: good practice
 
@@ -369,7 +347,7 @@ $MPI_LAUNCH code.exe >& out
 cp -r output $DATAWORK
 ```
 
----
+
 
 # Running a job: array
 
@@ -394,7 +372,7 @@ qsub -J 0-10 seq.array
 
 It will run the job with `PBS_ARRAY_INDEX` ranging from `0` to `10`.
 
----
+
 
 # Running a job: chained jobs
 
@@ -418,7 +396,7 @@ qrls 'qselect -N Job1 -u $USER'
 
 > Note: replace `afterany` by `afterok` (no error) or `afternotok` (error)
 
----
+
 
 # Running a job: follow-up
 
@@ -428,7 +406,7 @@ To follow the status of your job:
 qstat -u nbarrier
 ```
 
-<table class="center">
+<table class="center)
 <tr>
 <td><b>C</b></td>
 <td>Job is completed after having run.</td>
@@ -464,7 +442,7 @@ qstat -u nbarrier
 -->
 </table>
 
----
+
 
 # Running a job: follow-up
 
@@ -483,7 +461,7 @@ resources_used.walltime=00:00:24
 
 If you requested more memory/walltime than you used, adapt your needs for the next time (cf. [here](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/Datarmor-Calcul-et-Donnees/Datarmor-calcul-et-programmes/,DanaInfo=w3z.ifremer.fr,SSL+Placer-dimensionner-et-surveiller-ses-jobs-PBS#exemple) for more details)
 
----
+
 
 
 # Exchange between Datarmor and local computer
@@ -497,15 +475,14 @@ To exchange data, use the `datacopy.ifremer.fr` server, to which you can connect
 
 Is is advised to use FileZilla to do that
 
----
+
 
 # Exchange between Datarmor and local computer
 
-<div align="center">
-    <img height=500 src="figs/filezilla.png">
-</div>
+    <img height=500 src="figs/filezilla.png)
 
----
+
+
 
 # Exchange between Datarmor and remote server
 
@@ -523,7 +500,7 @@ time rsync -av login@server:/source/folder /destination/folder/ >& output
 
 This will need some adaptation depending on the remote server.
 
----
+
 
 # Conda
 
@@ -543,7 +520,7 @@ which conda
 
 to see if `conda` commands are accessible.
 
----
+
 
 # Conda: settings
 
@@ -563,7 +540,7 @@ channels:
 
 Replace the first line by a folder of your choice. It will contain your own environments.
 
----
+
 
 # Conda: using existing environments
 
@@ -585,7 +562,7 @@ To deactivate an environment:
 conda deactivate pyngl
 ```
 
----
+
 
 # Conda: creating environments
 
@@ -615,7 +592,7 @@ To remove an environment:
 conda env remove --name r-env
 ```
 
----
+
 
 # Conda: Running Jobs
 
@@ -637,41 +614,38 @@ conda activate myconda
 python toto.py >& output
 ```
 
----
+
 
 # Jupyterhub
 
 In order to process data in a fancy way, you can use [Jupyter](https://jupyter.org/). To do so, connect on https://datarmor-jupyterhub.ifremer.fr/ with your Intranet login.
 
-<div align="center">
-    <img height=400 src="figs/jupy1.png">
-</div>
+    <img height=400 src="figs/jupy1.png)
+
 
 > Note: you also need to be on Ifremer Network or with the Datarmor VPN activated
 
----
+
 
 # Jupyterhub
 
 Now, select the resources that you want (core + memory)
 
-<div align="center">
-    <img height=400 src="figs/jupy2.png">
-</div>
+    <img height=400 src="figs/jupy2.png)
+
 
 > **Warning: do not specify an optional environment**
 
----
+
 
 # Jupyterhub
 
 When the server is on, click on the `New` button and choose the Conda environment of your choice.
 
-<div align="center">
-    <img height=450 src="figs/jupy3.png">
-</div>
+    <img height=450 src="figs/jupy3.png)
 
----
+
+
 
 
 # Jupyterhub: personal environments
@@ -691,7 +665,7 @@ using Pkg
 Pkg.add("IJulia")
 ```
 
----
+
 
 # Datarmor acknowledgements
 
