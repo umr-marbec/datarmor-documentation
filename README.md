@@ -1,5 +1,7 @@
 # Datarmor Training
 
+Online version is accessible on demand [GitHub](https://github.com/umr-marbec/datarmor-documentation). You need to request access to the `UMR Marbec` Github community.
+
 ### Nicolas Barrier ([nicolas.barrier@ird.fr](mailto:nicolas.barrier@ird.fr))
 
 ![](figs/marbec-git.png){fig-align="center" width=100}
