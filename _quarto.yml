@@ -1,0 +1,7 @@
+title: Datarmor documentation
+theme: theme-den
+author: Nicolas Barrier
+format:
+  revealjs:
+    smaller: false
+    theme: [default, custom.scss]

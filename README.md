@@ -1,12 +1,3 @@
----
-marp: true
-title: datarmor_training
-theme: theme-den
-paginate: true
----
-
-
-
 # Datarmor Training
 
 ### Nicolas Barrier ([nicolas.barrier@ird.fr](mailto:nicolas.barrier@ird.fr))
@@ -22,7 +13,7 @@ paginate: true
 
 # What is Datarmor?
 
-Datarmor is a High-Performance Computer (HPC): 
+Datarmor is a High-Performance Computer (HPC):
 - CPU : 11088 cores (My PC: 12 cores)
 - RAM: 128 Go (My PC: 32 Go)
 - Storage: 5 Po = 5000 To (My PC: 1 To).
@@ -55,7 +46,7 @@ To create an account, send me an email (nicolas.barrier@ird.fr) with:
 - An **institutional** email address
 - A phone number
 - The names of your supervisors (if any)
-- A short description of why you want to use Datarmor (projects, tools, etc.) 
+- A short description of why you want to use Datarmor (projects, tools, etc.)
 
 Support questions about Datarmor should be sent to assistance@ifremer.fr
 
@@ -63,7 +54,7 @@ Support questions about Datarmor should be sent to assistance@ifremer.fr
 
 # Connection: Pulse Secure
 
-Outside the Ifremer Network, PulseSecure is required. It can be downloaded [here](https://domicile.ifremer.fr/index.php/s/WC9GArY8Eo51yZE/,DanaInfo=cloud.ifremer.fr,SSL+download?path=\%2F&files). 
+Outside the Ifremer Network, PulseSecure is required. It can be downloaded [here](https://domicile.ifremer.fr/index.php/s/WC9GArY8Eo51yZE/,DanaInfo=cloud.ifremer.fr,SSL+download?path=\%2F&files).
 
 Install the right version depending on your OS:
 
@@ -88,7 +79,7 @@ Connect to the Datarmor VPN using your **extranet** logins and leave it open unt
 # Connection: Terminal (Linux / Mac Os X)
 
 For Linux/Mac Os X users, open a Terminal and types:
- 
+
 ```
 ssh -X nbarrier@datarmor.ifremer.fr
 ```
@@ -102,7 +93,7 @@ replacing `nbarrier` by your **intranet** login. The `-X` option allows display 
 
 # Connection: Putty (Windows)
 
-For Windows Users, it is recommended to use [Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html): 
+For Windows Users, it is recommended to use [Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html):
 
 <div align="center">
     <img height=500 src="figs/Capture_putty.PNG">
@@ -131,7 +122,7 @@ ls $HOME/.ssh/id_rsa.pub
 If no such file, generate a key using
 
 ```
-ssh-keygen  
+ssh-keygen
 ```
 
 and follows instructions. Then, send it to Datarmor (the intranet password is needed):
@@ -447,28 +438,28 @@ qstat -u nbarrier
 <td>Job is exiting after having run.</td>
 </tr>
 <tr>
-<td><b>H</b></td> 
+<td><b>H</b></td>
 <td>Job is held.</td>
 </tr>
 <tr>
-<td><b>Q</b></td> 
+<td><b>Q</b></td>
 <td>Job is queued, eligible to run or routed.</td>
 </tr>
 <tr>
-<td><b>R</b></td> 
+<td><b>R</b></td>
 <td>Job is running.</td>
 </tr>
-<!-- 
+<!--
 <tr>
-<td>T</td> 
+<td>T</td>
 <td>Job is being moved to new location.</td>
 </tr>
 <tr>
-<td><b>W</b></td> 
+<td><b>W</b></td>
 <td>Job is waiting for its execution time (-a option) to be reached.</td>
 </tr>
 <tr>
-<td>S</td> 
+<td>S</td>
 <td>(Unicos only) Job is suspended.</td>
 -->
 </table>
@@ -536,7 +527,7 @@ This will need some adaptation depending on the remote server.
 
 # Conda
 
-Sometimes, you might need external tools that are not available on modules. One way to use these tools is to create your own [Conda](https://docs.conda.io/en/latest/) environments, which is possible on Datarmor (cf. [Conda sur Datarmor](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/Datarmor-Calcul-et-Donnees/Datarmor-calcul-et-programmes/Pour-aller-plus-loin/,DanaInfo=w3z.ifremer.fr,SSL+Conda-sur-Datarmor)). 
+Sometimes, you might need external tools that are not available on modules. One way to use these tools is to create your own [Conda](https://docs.conda.io/en/latest/) environments, which is possible on Datarmor (cf. [Conda sur Datarmor](https://domicile.ifremer.fr/intraric/Mon-IntraRIC/Calcul-et-donnees-scientifiques/Datarmor-Calcul-et-Donnees/Datarmor-calcul-et-programmes/Pour-aller-plus-loin/,DanaInfo=w3z.ifremer.fr,SSL+Conda-sur-Datarmor)).
 
 First, edit your `.cshrc` file (using `gedit $HOME/.cshrc &`) and add:
 
@@ -598,7 +589,7 @@ conda deactivate pyngl
 
 # Conda: creating environments
 
-To create a new environment: 
+To create a new environment:
 
 ```
 conda create --name new-env

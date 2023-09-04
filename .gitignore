@@ -1,4 +1,6 @@
 **/*.Rhistory
 **/*.swp
 **/.DS_Store
-README.html
+*.html
+*.pdf
+README_files
