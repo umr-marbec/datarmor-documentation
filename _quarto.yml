@@ -2,7 +2,7 @@ title: Datarmor documentation
 author: Nicolas Barrier
 format:
   revealjs:
-    smaller: false
+    smaller: true
     theme: [default, custom.scss]
     output-file: slides_datarmor-documentation.html
   pdf:
