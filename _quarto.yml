@@ -1,5 +1,11 @@
 title: Datarmor documentation
-author: Nicolas Barrier
+author:
+  - name: Nicolas Barrier
+    orcid: 0000-0002-1693-4719
+    email:  nicolas.barrier@ird.fr
+    affiliations:
+      - name: IRD
+
 format:
   revealjs:
     smaller: true
