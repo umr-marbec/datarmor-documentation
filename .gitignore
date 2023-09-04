@@ -7,3 +7,5 @@ README_files
 README.log
 .gitignore
 README.tex
+
+/.quarto/

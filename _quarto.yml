@@ -5,3 +5,11 @@ format:
   revealjs:
     smaller: false
     theme: [default, custom.scss]
+    output-file: slides_datarmor-documentation.html
+  pdf:
+    toc: false
+    number-sections: false
+    colorlinks: true
+    linestretch: 1.5
+    fontsize: 13pt
+    output-file: datarmor-documentation.pdf
