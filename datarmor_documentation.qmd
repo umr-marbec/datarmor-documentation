@@ -58,9 +58,9 @@ replacing `nbarrier` by your **intranet** login. The `-X` option allows display 
 
 > For Mac Os X users, I recommend to install and use [iTerm2](https://iterm2.com/) Terminal application, which is more user friendly than the default one.
 
-## Connection: Putty (Windows)
+## Connection: Putty or MobaXTerm (Windows)
 
-For Windows Users, it is recommended to use [Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html):
+For Windows Users, it is recommended to use [Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) or [MobaXTerm](https://mobaxterm.mobatek.net/)
 
 ![Putty connection window](figs/Capture_putty.PNG)
 
@@ -72,7 +72,7 @@ To allow display, you need to enable X11 forwarding on the `Connection > SSH` me
 
 ## RSA keys (Linux / Mac Os X)
 
-To connect on Datarmor without typing the password, you need to use a RSA key. First, check if one already exists on your local computer:
+To connect on Datarmor without typing the password, you need to use an ED25519 key. First, check if one already exists on your local computer:
 
 ```
 ls $HOME/.ssh/id_ed25519.pub
@@ -90,7 +90,7 @@ and follows instructions. Then, send it to Datarmor (the intranet password is ne
 ssh-copy-id nbarrier@datarmor.ifremer.fr
 ```
 
-Now you should be able to connect to Datarmor without typing your password.
+Use your login instead of `nbarrier`. Now you should be able to connect to Datarmor without typing your password.
 
 ## Navigating on Datarmor
 
@@ -185,7 +185,7 @@ You can also create environment variables (accessible via `$`):
 setenv R_LIBS_USER $HOME/libs/R/lib
 ```
 
-You can also load your favorite modules:
+You can also load your favorite modules automatically by adding the `module load` command in your `.cshrc` file:
 
 ```
 module load R
@@ -229,7 +229,7 @@ Some examples are provided in Datarmor's `/appli/services/exemples/` folder (see
 
 ## Running a job: PBS script (sequential)
 
-```
+``` bash
 #!/bin/csh
 #PBS -l mem=100M
 #PBS -l walltime=01:00:00
@@ -284,7 +284,7 @@ The full description of Datarmor queues is provided [here](https://domicile.ifre
 
 A good practice is to copy everything you need (code + data) to `$SCRATCH` and run your calculation from here:
 
-```
+``` bash
 #!/bin/csh
 #PBS -l mem=100M
 #PBS -q mpi_2
@@ -321,9 +321,9 @@ To run the job:
 qsub -J 0-10 seq.array
 ```
 
-It will run the job with `PBS_ARRAY_INDEX` ranging from `0` to `10`.
+It will run the job 11 times, with `PBS_ARRAY_INDEX` ranging from `0` to `10`.
 
-## Running a job: chained jobs
+## Running a job: chained jobs (Advanced users)
 
 To run a job in a chained mode (i.e.`job2` depends on `job1`), first run a job using the `-h` option (freeze the job):
 
@@ -494,7 +494,7 @@ To remove an environment:
 conda env remove --name r-env
 ```
 
-## Conda: Running Jobs
+## Conda: running jobs
 
 Conda can be used to run PBS jobs as follows:
 
@@ -516,8 +516,7 @@ python toto.py >& output
 
 ## Jupyterhub
 
-In order to process data in a fancy way, you can use [Jupyter](https://jupyter.org/). To do so, connect on https://datarmor-jupyterhub.ifremer.fr/ with your Intranet login.
-
+In order to process data in a fancy way, you can use [Jupyter](https://jupyter.org/). To do so, connect on [https://datarmor-jupyterhub.ifremer.fr/](https://datarmor-jupyterhub.ifremer.fr/) with your Intranet login.
 
 ![Jupyter connection window](figs/jupy1.png)
 
@@ -537,9 +536,9 @@ When the server is on, click on the `New` button and choose the Conda environmen
 
 ![Jupyter notebook window](figs/jupy3.png)
 
-## Jupyterhub: personal environments
+## Jupyterhub: personal Conda environments
 
-To use Jupyter with your own R, Python or Matlab environments, you will need to install the following additional libraries to your environment:
+To use Jupyter with your own R, Python or Matlab environments, you will need to install the following additional libraries to your Conda environments:
 
 ```
 conda install r-irkernel  ## for R
@@ -553,6 +552,38 @@ To use Jupyter with Julia, run Julia (installed with `conda`) from your environm
 using Pkg
 Pkg.add("IJulia")
 ```
+
+## Jupyterhub: manual installation of kernel
+
+If all your R libraries have been installed with a R version provided by Datarmor, you must manually install the R Kernel. To do so:
+
+-   Activate the JupyterHub environment of Datarmor: `conda activate jupyterhub`
+
+```{=html}
+<!-- -->
+```
+-   Load the R module of your choice, for instance `module load R/3.6.3-intel-cc-17.0.2.174`
+
+-   Open an R console by typing `R`. Then type:
+
+    ``` R
+    install.packages('IRkernel')
+    IRkernel::installspec(name = 'my-r', displayname = 'My R')
+    ```
+- Leave the R console (`quit()`). You should have a new folder in `$HOME/.local/share/jupyter/kernels/my-r`.
+- Type `echo $LD_LIBRARY_PATHS` and copy the output that is prompted in the Terminal.
+- In the `my-r` folder, edit the `kernel.json` file and edit it by adding a `env` variable that contains
+the output of the `LD_LIBRARY_PATH`. It should look like this
+
+    ```json
+    {
+      "argv": ["/appli/R/3.6.3-intel-cc-17.0.2.174/lib64/R/bin/R", "--slave", "-e", "IRkernel::main()", "--args", "{connection_file}"],
+      "display_name": "R/3.6.3-intel-cc-17.0.2.174",
+      "language": "R",
+      "env": {"LD_LIBRARY_PATH": "..."}
+    }
+    ```
+- Restart your JupyterHub server. You should see your environment.
 
 ## Datarmor acknowledgements
 
