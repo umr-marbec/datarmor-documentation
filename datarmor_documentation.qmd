@@ -241,11 +241,6 @@ module load R
 ## go to the directory where the job has been launched
 cd $PBS_O_WORKDIR
 
-cat > script.R <<EOF
-x = c(1, 2, 3, 4)
-print(x)
-EOF
-
 ## Run R
 Rscript script.R >& output.log  ## redirects outputs into log
 ```
