@@ -1,7 +1,6 @@
 **/*.Rhistory
 **/*.swp
 **/.DS_Store
-*.html
 *.pdf
 README_files
 README.log
@@ -11,3 +10,5 @@ README.tex
 /.quarto/
 datarmor_documentation_files/
 .Rproj.user
+datarmor_documentation.html
+slides_datarmor-documentation.html
