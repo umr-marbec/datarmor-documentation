@@ -1,4 +1,5 @@
 title: Datarmor documentation
+logo: figs/marbec-git.png 
 author:
   - name: Nicolas Barrier
     orcid: 0000-0002-1693-4719
@@ -8,10 +9,15 @@ author:
 execute:
   freeze: auto
 format:
+  html:
+    theme: darkly
   revealjs:
     smaller: true
     theme: [default, custom.scss]
     output-file: slides_datarmor-documentation.html
+    template-partials:
+      - title-slide.html
+
   pdf:
     toc: false
     number-sections: false
