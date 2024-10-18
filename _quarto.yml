@@ -10,7 +10,7 @@ execute:
   freeze: auto
 format:
   html:
-    theme: darkly
+    theme: cosmo
   revealjs:
     smaller: true
     theme: [default, custom.scss]
