@@ -431,7 +431,6 @@ envs_dirs:
 - /appli/conda-env/3.6
 channels:
   - conda-forge
-  - defaults
 ```
 
 Replace the first line by a folder of your choice. It will contain your own environments.
