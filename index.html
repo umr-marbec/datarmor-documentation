@@ -69,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="datarmor_documentation_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="datarmor_documentation_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="datarmor_documentation_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="datarmor_documentation_files/libs/bootstrap/bootstrap-b9aedc3c581de397c3385a5acc9783b4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="datarmor_documentation_files/libs/bootstrap/bootstrap-748340008184753533c6bf31d29774a7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -163,7 +163,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="connection-terminal-linux-mac-os-x" class="level2">
 <h2 class="anchored" data-anchor-id="connection-terminal-linux-mac-os-x">Connection: Terminal (Linux / Mac Os X)</h2>
 <p>For Linux/Mac Os X users, open a Terminal and types:</p>
-<pre><code>ssh -X nbarrier@datarmor.ifremer.fr</code></pre>
+<pre><code>ssh -X nbarrier@datarmor-access.ifremer.fr</code></pre>
 <p>replacing <code>nbarrier</code> by your <strong>intranet</strong> login. The <code>-X</code> option allows display (for use of text editors for instance). If the <code>-X</code> option does not work, use <code>-Y</code>.</p>
 <blockquote class="blockquote">
 <p>For Mac Os X users, I recommend to install and use <a href="https://iterm2.com/">iTerm2</a> Terminal application, which is more user friendly than the default one.</p>
@@ -196,7 +196,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>If no such file, generate a key using</p>
 <pre><code>ssh-keygen -t ed25519</code></pre>
 <p>and follows instructions. Then, send it to Datarmor (the intranet password is needed):</p>
-<pre><code>ssh-copy-id nbarrier@datarmor.ifremer.fr</code></pre>
+<pre><code>ssh-copy-id nbarrier@datarmor-access.ifremer.fr</code></pre>
 <p>Use your login instead of <code>nbarrier</code>. Now you should be able to connect to Datarmor without typing your password.</p>
 </section>
 <section id="navigating-on-datarmor" class="level2">
