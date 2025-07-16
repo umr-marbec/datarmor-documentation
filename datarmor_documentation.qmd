@@ -46,7 +46,7 @@ Connect to the Datarmor VPN using your **extranet** logins and leave it open unt
 For Linux/Mac Os X users, open a Terminal and types:
 
 ```
-ssh -X nbarrier@datarmor.ifremer.fr
+ssh -X nbarrier@datarmor-access.ifremer.fr
 ```
 
 replacing `nbarrier` by your **intranet** login. The `-X` option allows display (for use of text editors for instance). If the `-X` option does not work, use `-Y`.
@@ -82,7 +82,7 @@ ssh-keygen -t ed25519
 and follows instructions. Then, send it to Datarmor (the intranet password is needed):
 
 ```
-ssh-copy-id nbarrier@datarmor.ifremer.fr
+ssh-copy-id nbarrier@datarmor-access.ifremer.fr
 ```
 
 Use your login instead of `nbarrier`. Now you should be able to connect to Datarmor without typing your password.
