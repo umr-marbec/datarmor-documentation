@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,6 +10,9 @@
 
 <title>Datarmor documentation</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -66,10 +69,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="datarmor_documentation_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="datarmor_documentation_files/libs/quarto-html/anchor.min.js"></script>
 <link href="datarmor_documentation_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="datarmor_documentation_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="datarmor_documentation_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="datarmor_documentation_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="datarmor_documentation_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="datarmor_documentation_files/libs/bootstrap/bootstrap-748340008184753533c6bf31d29774a7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="datarmor_documentation_files/libs/bootstrap/bootstrap-026b43eddac53d9c8001bc9214a409cd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -145,7 +148,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="connection-pulse-secure" class="level2">
 <h2 class="anchored" data-anchor-id="connection-pulse-secure">Connection: Pulse Secure</h2>
-<p>Outside the Ifremer Network, PulseSecure is required. It can be downloaded <a href="https://domicile.ifremer.fr/index.php/s/WC9GArY8Eo51yZE/,DanaInfo=cloud.ifremer.fr,SSL+download?path=%2F&amp;files">here</a>.</p>
+<p>Outside the Ifremer Network, PulseSecure is required. It can be downloaded <a href="https://cloud.ifremer.fr/index.php/s/WC9GArY8Eo51yZE">here</a>.</p>
 <p>Install the right version depending on your OS:</p>
 <ul>
 <li>Windows 64: <code>PulseSecure.x86.msi</code></li>
@@ -259,12 +262,12 @@ module load vacumm/3.4.0-intel  ## load a specific version</code></pre>
 <section id="default-settings-22" class="level2">
 <h2 class="anchored" data-anchor-id="default-settings-22">Default settings (2/2)</h2>
 <p>In the <code>.cshrc</code> file, you can overwrite existing commands and create new ones:</p>
-<div class="sourceCode" id="cb11" data-language="csh"><pre class="sourceCode csh code-with-copy"><code class="sourceCode tcsh"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">alias</span> x <span class="st">'exit'</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-language="csh"><pre class="sourceCode csh code-with-copy"><code class="sourceCode tcsh"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">alias</span> x <span class="st">'exit'</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">alias</span> <span class="kw">rm</span> <span class="st">'rm -i -v'</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">alias</span> <span class="kw">cp</span> <span class="st">'cp -i -v'</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">alias</span> <span class="kw">mv</span> <span class="st">'mv -i -v'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">alias</span> <span class="kw">mv</span> <span class="st">'mv -i -v'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You can also create environment variables (accessible via <code>$</code>):</p>
-<div class="sourceCode" id="cb12" data-language="csh"><pre class="sourceCode csh code-with-copy"><code class="sourceCode tcsh"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">setenv</span><span class="ot"> </span>R_LIBS_USER<span class="ot"> $HOME</span>/libs/R/lib</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-language="csh"><pre class="sourceCode csh code-with-copy"><code class="sourceCode tcsh"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">setenv</span><span class="ot"> </span>R_LIBS_USER<span class="ot"> $HOME</span>/libs/R/lib</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You can also load your favorite modules automatically by adding the <code>module load</code> command in your <code>.cshrc</code> file:</p>
 <pre><code>module load R</code></pre>
 </section>
@@ -294,7 +297,7 @@ module load vacumm/3.4.0-intel  ## load a specific version</code></pre>
 </section>
 <section id="running-a-job-pbs-script-sequential" class="level2">
 <h2 class="anchored" data-anchor-id="running-a-job-pbs-script-sequential">Running a job: PBS script (sequential)</h2>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/csh</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/csh</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#PBS -l mem=100M</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#PBS -l walltime=01:00:00</span></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -306,12 +309,12 @@ module load vacumm/3.4.0-intel  ## load a specific version</code></pre>
 <span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$PBS_O_WORKDIR</span></span>
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co">## Run R</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> script.R <span class="op">&gt;&amp;</span> output.log  <span class="co">## redirects outputs into log</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> script.R <span class="op">&gt;&amp;</span> output.log  <span class="co">## redirects outputs into log</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="running-a-job-pbs-script-parallel" class="level2">
 <h2 class="anchored" data-anchor-id="running-a-job-pbs-script-parallel">Running a job: PBS script (parallel)</h2>
 <p>Parallel jobs are run in the same way, except that a queue (<code>-q</code>) parameter is added. It specifies the resources that you will use.</p>
-<div class="sourceCode" id="cb17" data-language="csh"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/csh</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" data-language="csh"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/csh</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#PBS -l mem=100M</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#PBS -q mpi_2</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#PBS -l walltime=01:00:00</span></span>
@@ -320,7 +323,7 @@ module load vacumm/3.4.0-intel  ## load a specific version</code></pre>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /usr/share/Modules/3.2.10/init/csh</span>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load NETCDF/4.3.3.1-mpt-intel2016</span>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="va">$MPI_LAUNCH</span> program.exe <span class="op">&gt;&amp;</span> out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="va">$MPI_LAUNCH</span> program.exe <span class="op">&gt;&amp;</span> out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In the above, 2 nodes, each containing 28 cores are requested, so 56 cores in total</p>
 </section>
 <section id="running-a-job-queues" class="level2">
@@ -338,7 +341,7 @@ module load vacumm/3.4.0-intel  ## load a specific version</code></pre>
 <section id="running-a-job-good-practice" class="level2">
 <h2 class="anchored" data-anchor-id="running-a-job-good-practice">Running a job: good practice</h2>
 <p>A good practice is to copy everything you need (code + data) to <code>$SCRATCH</code> and run your calculation from here:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/csh</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/csh</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#PBS -l mem=100M</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#PBS -q mpi_2</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#PBS -l walltime=01:00:00</span></span>
@@ -350,7 +353,7 @@ module load vacumm/3.4.0-intel  ## load a specific version</code></pre>
 <span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> <span class="va">$DATAWORK</span>/data <span class="va">$SCRATCH</span></span>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$SCRATCH</span></span>
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="va">$MPI_LAUNCH</span> code.exe <span class="op">&gt;&amp;</span> out</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> output <span class="va">$DATAWORK</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> output <span class="va">$DATAWORK</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="running-a-job-array" class="level2">
 <h2 class="anchored" data-anchor-id="running-a-job-array">Running a job: array</h2>
@@ -571,17 +574,17 @@ Pkg.add("IJulia")</code></pre>
 <ul>
 <li><p>Load the R module of your choice, for instance <code>module load R/3.6.3-intel-cc-17.0.2.174</code></p></li>
 <li><p>Open an R console by typing <code>R</code>. Then type:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'IRkernel'</span>)</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>IRkernel<span class="sc">::</span><span class="fu">installspec</span>(<span class="at">name =</span> <span class="st">'my-r'</span>, <span class="at">displayname =</span> <span class="st">'My R'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'IRkernel'</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>IRkernel<span class="sc">::</span><span class="fu">installspec</span>(<span class="at">name =</span> <span class="st">'my-r'</span>, <span class="at">displayname =</span> <span class="st">'My R'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>Leave the R console (<code>quit()</code>). You should have a new folder in <code>$HOME/.local/share/jupyter/kernels/my-r</code>.</p></li>
 <li><p>Type <code>echo $LD_LIBRARY_PATHS</code> and copy the output that is prompted in the Terminal.</p></li>
 <li><p>In the <code>my-r</code> folder, edit the <code>kernel.json</code> file and edit it by adding a <code>env</code> variable that contains the output of the <code>LD_LIBRARY_PATH</code>. It should look like this</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"argv"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"/appli/R/3.6.3-intel-cc-17.0.2.174/lib64/R/bin/R"</span><span class="ot">,</span> <span class="st">"--slave"</span><span class="ot">,</span> <span class="st">"-e"</span><span class="ot">,</span> <span class="st">"IRkernel::main()"</span><span class="ot">,</span> <span class="st">"--args"</span><span class="ot">,</span> <span class="st">"{connection_file}"</span><span class="ot">]</span><span class="fu">,</span></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"display_name"</span><span class="fu">:</span> <span class="st">"R/3.6.3-intel-cc-17.0.2.174"</span><span class="fu">,</span></span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"language"</span><span class="fu">:</span> <span class="st">"R"</span><span class="fu">,</span></span>
 <span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"env"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"LD_LIBRARY_PATH"</span><span class="fu">:</span> <span class="st">"..."</span><span class="fu">}</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>Restart your JupyterHub server. You should see your environment.</p></li>
 </ul>
 </section>
@@ -644,13 +647,14 @@ Pkg.add("IJulia")</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
