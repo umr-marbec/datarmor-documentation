@@ -24,7 +24,7 @@ Support questions about Datarmor should be sent to [assistance\@ifremer.fr](mail
 
 ## Connection: Pulse Secure
 
-Outside the Ifremer Network, PulseSecure is required. It can be downloaded [here](https://domicile.ifremer.fr/index.php/s/WC9GArY8Eo51yZE/,DanaInfo=cloud.ifremer.fr,SSL+download?path=%2F&files).
+Outside the Ifremer Network, PulseSecure is required. It can be downloaded [here](https://cloud.ifremer.fr/index.php/s/WC9GArY8Eo51yZE).
 
 Install the right version depending on your OS:
 
